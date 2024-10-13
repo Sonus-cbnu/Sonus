@@ -1,6 +1,6 @@
+# ----------------------------- 라이브러리 임포트 -----------------------------
 import os
 import json
-import math
 import numpy as np
 import librosa
 from tqdm import tqdm
@@ -8,127 +8,87 @@ import h5py
 
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, f1_score
+from sklearn.metrics import (
+    classification_report,
+    f1_score,
+    precision_score,
+    recall_score,
+    accuracy_score,
+)
 from sklearn.utils.class_weight import compute_class_weight
 
-import tensorflow as tf
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import (
-    Input,
-    Conv2D,
-    MaxPooling2D,
-    BatchNormalization,
-    Flatten,
-    Dense,
-    Dropout,
-)
-from tensorflow.keras.callbacks import (
-    EarlyStopping,
-    ModelCheckpoint,
-    TensorBoard,
-    CSVLogger,
-    ReduceLROnPlateau,
-)
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
 
-import keras_tuner as kt
 import random
 import re
 import gc
 from typing import List, Tuple, Dict, Any
 
 # ----------------------------- 설정 -----------------------------
-# 배치 크기와 에폭 수를 상단에 변수로 정의
-BATCH_SIZE: int = 64  # 배치 크기 설정 (작게 조정하여 일반화 향상)
-EPOCHS: int = 20  # 에포크 수 설정
+# 일반 설정
+BATCH_SIZE = 256  # 배치 크기 설정
+EPOCHS = 20  # 에포크 수 설정
+LEARNING_RATE = 1e-4  # 학습률 설정
 
-APPLY_SMOTE: bool = False  # SMOTE 적용 여부 설정 (비활성화)
-
-# 하이퍼파라미터 튜닝 활성화 여부 설정
-ENABLE_HYPERPARAMETER_TUNING: bool = False  # 하이퍼파라미터 튜닝 활성화 여부
-
-# 로그 콜백 활성화 여부 설정
-ENABLE_TENSORBOARD: bool = True  # TensorBoard 로그 활성화 여부
-ENABLE_CSVLOGGER: bool = True  # CSVLogger 로그 활성화 여부
-
-# 학습률 설정
-LEARNING_RATE: float = 1e-4  # 기본 학습률
-
-# 데이터 출력 디렉토리 설정
-data_output_dir: str = "./data"  # 생성된 데이터셋이 저장된 디렉토리
-metadata_file: str = os.path.join(
-    data_output_dir, "metadata.json"
-)  # 메타데이터 파일 경로
-
-# 캐시 디렉토리 설정
-cache_dir: str = "./cache"  # 캐시 데이터를 저장할 디렉토리
+# 데이터 관련 설정
+data_output_dir = "./data"  # 데이터 출력 디렉토리
+metadata_file = os.path.join(data_output_dir, "metadata.json")  # 메타데이터 파일 경로
+cache_dir = "./cache"  # 캐시 디렉토리 설정
 os.makedirs(cache_dir, exist_ok=True)
-hdf5_file: str = os.path.join(
-    cache_dir, "preprocessed_data.h5"
-)  # 전처리된 데이터를 저장할 HDF5 파일 경로
+hdf5_file = os.path.join(cache_dir, "preprocessed_data.h5")  # 전처리된 데이터 저장 경로
+n_mfcc = 40  # MFCC 계수의 수
+max_len = 174  # MFCC 벡터의 최대 길이
 
-# MFCC 추출을 위한 설정
-n_mfcc: int = 40  # 추출할 MFCC 계수의 수
-max_len: int = 174  # MFCC 벡터의 최대 길이 (시간 축)
-
-# 모델 저장 디렉토리 설정
-models_output_dir: str = "./models"  # 학습된 모델을 저장할 디렉토리
+# 모델 및 로그 디렉토리 설정
+models_output_dir = "./models"  # 모델 저장 디렉토리
 os.makedirs(models_output_dir, exist_ok=True)
-
-# 로그 디렉토리 설정 (TensorBoard)
-logs_dir: str = "./logs"
+logs_dir = "./logs"  # 로그 디렉토리
 os.makedirs(logs_dir, exist_ok=True)
 
-# Keras Tuner 디렉토리 설정
-kt_directory: str = "./kt_dir"
-os.makedirs(kt_directory, exist_ok=True)
+# 하이퍼파라미터 튜닝 설정
+APPLY_HYPERPARAMETER_TUNING = False  # 하이퍼파라미터 튜닝 적용 여부
 
-# ----------------------------- GPU 메모리 관리 -----------------------------
-gpus: List[tf.config.PhysicalDevice] = tf.config.list_physical_devices("GPU")
-if gpus:
-    try:
-        # GPU 메모리 사용을 제한
-        for gpu in gpus:
-            tf.config.experimental.set_virtual_device_configuration(
-                gpu,
-                [
-                    tf.config.experimental.VirtualDeviceConfiguration(memory_limit=4096)
-                ],  # 메모리 할당을 4GB로 제한
-            )
-        print(f"활성화된 GPU: {[gpu.name for gpu in gpus]}")
-    except RuntimeError as e:
-        print(e)
+# ----------------------------- GPU 및 CPU 설정 -----------------------------
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+print(f"사용 중인 디바이스: {device}\n")
 
-# ----------------------------- CPU 사용 제한 설정 -----------------------------
-# 환경 변수를 설정하여 NumPy 등의 라이브러리의 스레드 수 제한
+# CPU 사용 제한 설정
 os.environ["OMP_NUM_THREADS"] = "4"
 os.environ["OPENBLAS_NUM_THREADS"] = "4"
 os.environ["MKL_NUM_THREADS"] = "4"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "4"
 os.environ["NUMEXPR_NUM_THREADS"] = "4"
-
-# TensorFlow의 스레드 수 제한
-tf.config.threading.set_intra_op_parallelism_threads(4)
-tf.config.threading.set_inter_op_parallelism_threads(4)
+torch.set_num_threads(4)
 
 
+# ----------------------------- 전처리 함수 정의 -----------------------------
 def sanitize_name(name: str) -> str:
     """
-    문자열에서 알파벳, 숫자, 언더스코어만 남기고 나머지는 제거하는 함수
+    문자열에서 알파벳, 숫자, 언더스코어만 남기고 나머지는 제거합니다.
 
-    :param name: 원본 문자열
-    :return: 정제된 문자열
+    Args:
+        name (str): 원본 문자열.
+
+    Returns:
+        str: 정제된 문자열.
     """
     return re.sub(r"[^a-zA-Z0-9_]", "", name.replace(" ", "_"))
 
 
 def load_metadata(metadata_path: str) -> List[Dict[str, Any]]:
     """
-    메타데이터를 로드하는 함수
+    메타데이터를 로드합니다.
 
-    :param metadata_path: 메타데이터 파일의 경로
-    :return: 메타데이터 리스트
+    Args:
+        metadata_path (str): 메타데이터 파일의 경로.
+
+    Returns:
+        List[Dict[str, Any]]: 메타데이터 리스트.
     """
-    metadata: List[Dict[str, Any]] = []
+    metadata = []
     with open(metadata_path, "r") as f:
         for line in f:
             metadata.append(json.loads(line))
@@ -137,19 +97,19 @@ def load_metadata(metadata_path: str) -> List[Dict[str, Any]]:
 
 def extract_mfcc(file_path: str, n_mfcc: int = 40, max_len: int = 174) -> np.ndarray:
     """
-    오디오 파일에서 MFCC 특징을 추출하는 함수
+    오디오 파일에서 MFCC 특징을 추출합니다.
 
-    :param file_path: 오디오 파일의 경로
-    :param n_mfcc: 추출할 MFCC 계수의 수
-    :param max_len: MFCC 벡터의 최대 길이 (시간 축)
-    :return: 고정된 크기의 MFCC 넘파이 배열
+    Args:
+        file_path (str): 오디오 파일의 경로.
+        n_mfcc (int): 추출할 MFCC 계수의 수.
+        max_len (int): MFCC 벡터의 최대 길이.
+
+    Returns:
+        np.ndarray: 고정된 크기의 MFCC 배열.
     """
     try:
-        # 오디오 로드
         y, sr = librosa.load(file_path, sr=None, mono=True)
-        # MFCC 추출
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc)
-        # 길이 조정 (패딩 또는 자르기)
         if mfcc.shape[1] < max_len:
             pad_width = max_len - mfcc.shape[1]
             mfcc = np.pad(mfcc, pad_width=((0, 0), (0, pad_width)), mode="constant")
@@ -158,44 +118,35 @@ def extract_mfcc(file_path: str, n_mfcc: int = 40, max_len: int = 174) -> np.nda
         return mfcc
     except Exception as e:
         print(f"MFCC 추출 실패: {file_path}, 에러: {e}")
-        return np.zeros((n_mfcc, max_len))  # 실패 시 0으로 채운 배열 반환
+        return np.zeros((n_mfcc, max_len))
 
 
 def preprocess_and_save_data(
     metadata: List[Dict[str, Any]], data_dir: str, hdf5_path: str
 ) -> None:
     """
-    데이터 전처리 및 HDF5 파일로 저장하는 함수
+    데이터 전처리 및 HDF5 파일로 저장합니다.
 
-    :param metadata: 메타데이터 리스트
-    :param data_dir: 오디오 데이터가 저장된 디렉토리
-    :param hdf5_path: 저장할 HDF5 파일의 경로
+    Args:
+        metadata (List[Dict[str, Any]]): 메타데이터 리스트.
+        data_dir (str): 오디오 데이터가 저장된 디렉토리.
+        hdf5_path (str): 저장할 HDF5 파일의 경로.
     """
-    # 전체 데이터 수
-    total_samples: int = len(metadata)
-    # HDF5 파일 생성
+    total_samples = len(metadata)
     with h5py.File(hdf5_path, "w") as h5f:
-        # 데이터셋 생성
         X_ds = h5f.create_dataset(
             "X", shape=(total_samples, n_mfcc, max_len), dtype=np.float32
         )
-        # 레이블 저장을 위한 리스트
-        Y_list: List[List[str]] = []
-        # 모든 데이터에 대해 전처리 수행
+        Y_list = []
         for idx, data in enumerate(tqdm(metadata, desc="전처리 중")):
-            # 오디오 파일의 경로 생성
-            sample_path: str = os.path.join(
+            sample_path = os.path.join(
                 data_dir, data["relative_path"], data["sample_name"]
             )
-            # MFCC 특징 추출
-            mfcc: np.ndarray = extract_mfcc(sample_path, n_mfcc, max_len)
-            # HDF5 데이터셋에 저장
+            mfcc = extract_mfcc(sample_path, n_mfcc, max_len)
             X_ds[idx] = mfcc
-            # 레이블 수집
-            instruments: List[str] = data["instruments"]
+            instruments = data["instruments"]
             Y_list.append(instruments)
-        # 레이블을 HDF5 파일에 저장 (JSON-encoded strings)
-        Y_encoded_strings: List[str] = [json.dumps(instr_list) for instr_list in Y_list]
+        Y_encoded_strings = [json.dumps(instr_list) for instr_list in Y_list]
         dt = h5py.string_dtype(encoding="utf-8")
         Y_ds = h5f.create_dataset(
             "Y", data=np.array(Y_encoded_strings, dtype=object), dtype=dt
@@ -204,327 +155,554 @@ def preprocess_and_save_data(
 
 def load_preprocessed_data(hdf5_path: str) -> Tuple[np.ndarray, np.ndarray]:
     """
-    전처리된 데이터를 HDF5 파일에서 로드하는 함수
+    전처리된 데이터를 HDF5 파일에서 로드합니다.
 
-    :param hdf5_path: HDF5 파일의 경로
-    :return: 특징 배열 X와 레이블 리스트 Y
+    Args:
+        hdf5_path (str): HDF5 파일의 경로.
+
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: 특징 배열 X와 레이블 리스트 Y.
     """
     with h5py.File(hdf5_path, "r") as h5f:
-        X: np.ndarray = h5f["X"][:]
-        Y: np.ndarray = h5f["Y"][:]
+        X = h5f["X"][:]
+        Y = h5f["Y"][:]
     return X, Y
 
 
 def encode_labels(Y: np.ndarray) -> Tuple[np.ndarray, MultiLabelBinarizer, List[str]]:
     """
-    레이블을 이진 벡터로 인코딩하는 함수
+    레이블을 이진 벡터로 인코딩합니다.
 
-    :param Y: 레이블 리스트 (JSON-encoded strings)
-    :return: 인코딩된 레이블 배열, 레이블 변환기 (mlb), 모든 악기 리스트
+    Args:
+        Y (np.ndarray): 레이블 리스트 (JSON-encoded strings).
+
+    Returns:
+        Tuple[np.ndarray, MultiLabelBinarizer, List[str]]: 인코딩된 레이블 배열, 레이블 변환기, 모든 악기 리스트.
     """
-    # 모든 악기의 집합을 생성하고 정렬
-    all_instruments: set = set()
-    parsed_Y: List[List[str]] = []
+    all_instruments = set()
+    parsed_Y = []
     for instruments in Y:
         if isinstance(instruments, bytes):
             instruments = instruments.decode("utf-8")
         if isinstance(instruments, str):
             try:
-                # JSON 형식의 리스트로 파싱
                 instruments = json.loads(instruments)
             except json.JSONDecodeError:
-                # 파싱 실패 시, 쉼표로 분리
                 instruments = instruments.split(",")
         if not isinstance(instruments, list):
             instruments = []
-        # 악기 이름 정리 및 집합에 추가
         instruments = [instr.strip() for instr in instruments if instr.strip()]
         all_instruments.update(instruments)
         parsed_Y.append(instruments)
     all_instruments = sorted(list(all_instruments))
 
     if not all_instruments:
-        print(
-            "경고: 모든 악기 리스트가 비어 있습니다. 데이터에 악기 레이블이 없는 것으로 보입니다."
-        )
+        print("경고: 모든 악기 리스트가 비어 있습니다.")
 
-    # MultiLabelBinarizer를 사용하여 레이블 이진 인코딩
-    mlb: MultiLabelBinarizer = MultiLabelBinarizer(classes=all_instruments)
-    Y_encoded: np.ndarray = mlb.fit_transform(parsed_Y)
+    mlb = MultiLabelBinarizer(classes=all_instruments)
+    Y_encoded = mlb.fit_transform(parsed_Y)
     return Y_encoded, mlb, all_instruments
 
 
-def augment_batch_tf(batch_X: tf.Tensor) -> tf.Tensor:
+def augment_batch(batch_X: torch.Tensor) -> torch.Tensor:
     """
-    TensorFlow 기반의 데이터 증강 함수
+    데이터 증강을 수행합니다.
 
-    :param batch_X: 배치의 MFCC 데이터 (Tensor)
-    :return: 증강된 배치의 MFCC 데이터
+    Args:
+        batch_X (torch.Tensor): 배치의 MFCC 데이터. (channels, time, frequency)
+
+    Returns:
+        torch.Tensor: 증강된 배치의 MFCC 데이터.
     """
-    # 볼륨 변경 (스케일링)
-    scale: tf.Tensor = tf.random.uniform([], 0.8, 1.2)
+    # 데이터 증강 예시 (필요에 따라 수정)
+    scale = random.uniform(0.8, 1.2)
     batch_X = batch_X * scale
 
-    # 노이즈 추가
-    noise: tf.Tensor = tf.random.normal(shape=tf.shape(batch_X), mean=0.0, stddev=0.05)
+    noise = torch.randn_like(batch_X) * 0.05
     batch_X = batch_X + noise
 
-    # 주파수 축에서 마스킹 (SpecAugment 유사)
-    freq_masking: tf.Tensor = tf.random.uniform([], 0, n_mfcc // 10, dtype=tf.int32)
-    f0: tf.Tensor = tf.random.uniform(
-        [], 0, tf.maximum(n_mfcc - freq_masking, 1), dtype=tf.int32
-    )
-    # 주파수 마스크 생성
-    mask_freq: tf.Tensor = tf.concat(
-        [
-            tf.ones([f0, max_len, 1], dtype=batch_X.dtype),
-            tf.zeros([freq_masking, max_len, 1], dtype=batch_X.dtype),
-            tf.ones([n_mfcc - f0 - freq_masking, max_len, 1], dtype=batch_X.dtype),
-        ],
-        axis=0,
-    )  # shape [n_mfcc, max_len,1]
+    # 주파수 마스킹
+    freq_masking = random.randint(0, n_mfcc // 10)
+    if freq_masking > 0:
+        f0 = random.randint(0, max(n_mfcc - freq_masking - 1, 0))
+        batch_X[:, :, f0 : f0 + freq_masking] = 0
 
-    # 배치 크기에 맞게 마스크 확장
-    batch_size: tf.Tensor = tf.shape(batch_X)[0]
-    mask_freq = tf.expand_dims(mask_freq, 0)  # [1, n_mfcc, max_len,1]
-    mask_freq = tf.tile(
-        mask_freq, [batch_size, 1, 1, 1]
-    )  # [batch_size, n_mfcc, max_len,1]
-    batch_X = batch_X * mask_freq
-
-    # 시간 축에서 마스킹
-    time_masking: tf.Tensor = tf.random.uniform([], 0, max_len // 10, dtype=tf.int32)
-    t0: tf.Tensor = tf.random.uniform(
-        [], 0, tf.maximum(max_len - time_masking, 1), dtype=tf.int32
-    )
-    # 시간 마스크 생성
-    mask_time: tf.Tensor = tf.concat(
-        [
-            tf.ones([n_mfcc, t0, 1], dtype=batch_X.dtype),
-            tf.zeros([n_mfcc, time_masking, 1], dtype=batch_X.dtype),
-            tf.ones([n_mfcc, max_len - t0 - time_masking, 1], dtype=batch_X.dtype),
-        ],
-        axis=1,
-    )  # shape [n_mfcc, max_len,1]
-    mask_time = tf.expand_dims(mask_time, 0)  # [1, n_mfcc, max_len,1]
-    mask_time = tf.tile(
-        mask_time, [batch_size, 1, 1, 1]
-    )  # [batch_size, n_mfcc, max_len,1]
-    batch_X = batch_X * mask_time
+    # 시간 마스킹
+    time_masking = random.randint(0, max_len // 10)
+    if time_masking > 0:
+        t0 = random.randint(0, max(max_len - time_masking - 1, 0))
+        batch_X[:, t0 : t0 + time_masking, :] = 0
 
     return batch_X
 
 
-def data_generator(
-    X: np.ndarray,
-    Y: np.ndarray,
-    batch_size: int,
-    shuffle: bool = True,
-    augment: bool = False,
-) -> tf.data.Dataset:
+# ----------------------------- 데이터셋 클래스 정의 -----------------------------
+class MFCCDataset(Dataset):
     """
-    데이터 제너레이터 (Keras 모델 훈련용)
-
-    :param X: 특징 배열 (numpy 배열)
-    :param Y: 레이블 배열 (numpy 배열)
-    :param batch_size: 배치 크기
-    :param shuffle: 데이터 섞기 여부
-    :param augment: 데이터 증강 여부
-    :return: tf.data.Dataset 객체
-    """
-    dataset: tf.data.Dataset = tf.data.Dataset.from_tensor_slices((X, Y))
-
-    if shuffle:
-        dataset = dataset.shuffle(buffer_size=len(X))
-
-    dataset = dataset.batch(batch_size)
-
-    # 채널 차원 추가
-    dataset = dataset.map(
-        lambda x, y: (tf.expand_dims(x, -1), y),
-        num_parallel_calls=tf.data.experimental.AUTOTUNE,
-    )
-
-    if augment:
-        # TensorFlow 기반 데이터 증강 함수 사용
-        dataset = dataset.map(
-            lambda x, y: (augment_batch_tf(x), y),
-            num_parallel_calls=tf.data.experimental.AUTOTUNE,
-        )
-
-    # 정규화 단계
-    def preprocess(
-        batch_X: tf.Tensor, batch_Y: tf.Tensor
-    ) -> Tuple[tf.Tensor, tf.Tensor]:
-        """
-        배치 데이터를 정규화하는 내부 함수
-
-        :param batch_X: 배치의 MFCC 데이터
-        :param batch_Y: 배치의 레이블 데이터
-        :return: 정규화된 배치 데이터와 레이블
-        """
-        # MFCC 데이터를 정규화 (평균 0, 분산 1)
-        mean: tf.Tensor = tf.reduce_mean(batch_X, axis=[1, 2, 3], keepdims=True)
-        std: tf.Tensor = tf.math.reduce_std(batch_X, axis=[1, 2, 3], keepdims=True)
-        batch_X = (batch_X - mean) / (std + 1e-6)
-        return batch_X, batch_Y
-
-    dataset = dataset.map(
-        preprocess,
-        num_parallel_calls=tf.data.experimental.AUTOTUNE,
-    )
-
-    # Prefetching을 통해 GPU와 데이터 로딩 간 병목 현상 완화
-    dataset = dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-
-    return dataset
-
-
-def build_model(
-    input_shape: Tuple[int, int, int],
-    num_classes: int,
-    dropout_rate: float = 0.5,
-    l2_reg: float = 0.001,
-) -> Model:
-    """
-    CNN 모델을 구축하는 함수
-
-    :param input_shape: 입력 데이터의 형태 (n_mfcc, max_len, 1)
-    :param num_classes: 출력 클래스의 수
-    :param dropout_rate: 드롭아웃 비율
-    :param l2_reg: L2 정규화 계수
-    :return: 케라스 모델 객체
-    """
-    from tensorflow.keras import regularizers
-
-    inputs: tf.Tensor = Input(shape=input_shape)
-
-    # 첫 번째 컨볼루션 블록
-    x: tf.Tensor = Conv2D(
-        128,
-        (3, 3),
-        activation="relu",
-        padding="same",
-        kernel_regularizer=regularizers.l2(l2_reg),
-    )(inputs)
-    x = MaxPooling2D((2, 2))(x)
-    x = BatchNormalization()(x)
-
-    # 두 번째 컨볼루션 블록
-    x = Conv2D(
-        64,
-        (3, 3),
-        activation="relu",
-        padding="same",
-        kernel_regularizer=regularizers.l2(l2_reg),
-    )(x)
-    x = MaxPooling2D((2, 2))(x)
-    x = BatchNormalization()(x)
-
-    # 세 번째 컨볼루션 블록
-    x = Conv2D(
-        32,
-        (3, 3),
-        activation="relu",
-        padding="same",
-        kernel_regularizer=regularizers.l2(l2_reg),
-    )(x)
-    x = MaxPooling2D((2, 2))(x)
-    x = BatchNormalization()(x)
-
-    # 완전 연결 층
-    x = Flatten()(x)
-    x = Dense(256, activation="relu", kernel_regularizer=regularizers.l2(l2_reg))(x)
-    x = Dropout(dropout_rate)(x)
-    x = Dense(128, activation="relu", kernel_regularizer=regularizers.l2(l2_reg))(x)
-    x = Dropout(dropout_rate)(x)
-    x = Dense(64, activation="relu", kernel_regularizer=regularizers.l2(l2_reg))(x)
-    x = Dropout(dropout_rate)(x)
-
-    # 출력 층 (시그모이드 활성화 함수 사용)
-    outputs: tf.Tensor = Dense(num_classes, activation="sigmoid")(x)
-
-    # 모델 생성
-    model: Model = Model(inputs, outputs)
-    return model
-
-
-# ----------------------------- 하이퍼파라미터 튜닝 클래스 정의 -----------------------------
-class InstrumentHyperModel(kt.HyperModel):
-    """
-    Keras Tuner를 위한 하이퍼모델 클래스
+    MFCC 데이터를 위한 PyTorch Dataset 클래스
     """
 
-    def __init__(self, input_shape: Tuple[int, int, int], num_classes: int):
+    def __init__(self, X: np.ndarray, Y: np.ndarray, augment: bool = False):
         """
         초기화 함수
 
-        :param input_shape: 입력 데이터의 형태
-        :param num_classes: 출력 클래스의 수
+        Args:
+            X (np.ndarray): 특징 데이터.
+            Y (np.ndarray): 레이블 데이터.
+            augment (bool): 데이터 증강 여부.
         """
-        self.input_shape = input_shape
-        self.num_classes = num_classes
+        self.X = X
+        self.Y = Y
+        self.augment = augment
 
-    def build(self, hp: kt.HyperParameters) -> Model:
+    def __len__(self) -> int:
         """
-        하이퍼파라미터에 따라 모델을 구축하는 함수
+        데이터셋의 길이를 반환합니다.
 
-        :param hp: 하이퍼파라미터 객체
-        :return: 케라스 모델 객체
+        Returns:
+            int: 데이터셋의 길이.
         """
-        from tensorflow.keras import regularizers
+        return len(self.Y)
 
-        inputs: tf.Tensor = Input(shape=self.input_shape)
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        인덱스에 해당하는 데이터를 반환합니다.
 
-        # 하이퍼파라미터를 사용한 컨볼루션 블록 추가
-        x: tf.Tensor = inputs
-        for i in range(hp.Int("num_conv_blocks", 2, 4)):
-            filters: int = hp.Choice(f"filters_{i}", values=[32, 64, 128])
-            x = Conv2D(
-                filters,
-                (3, 3),
-                activation="relu",
-                padding="same",
-                kernel_regularizer=regularizers.l2(hp.Float("l2_reg", 1e-4, 1e-2)),
-            )(x)
-            x = MaxPooling2D((2, 2))(x)
-            x = BatchNormalization()(x)
+        Args:
+            idx (int): 데이터 인덱스.
 
-        x = Flatten()(x)
-        for j in range(hp.Int("num_dense_layers", 1, 3)):
-            units: int = hp.Int(f"units_{j}", min_value=64, max_value=512, step=64)
-            x = Dense(
-                units,
-                activation="relu",
-                kernel_regularizer=regularizers.l2(
-                    hp.Float("l2_reg_dense", 1e-4, 1e-2)
-                ),
-            )(x)
-            dropout_rate: float = hp.Float("dropout_rate", 0.2, 0.5, step=0.1)
-            x = Dropout(dropout_rate)(x)
+        Returns:
+            Tuple[torch.Tensor, torch.Tensor]: 특징과 레이블 텐서.
+        """
+        x = self.X[idx]
+        y = self.Y[idx]
 
-        outputs: tf.Tensor = Dense(self.num_classes, activation="sigmoid")(x)
+        x = np.expand_dims(x, axis=0)
+        x = x.transpose(0, 2, 1)
+        x = torch.from_numpy(x).float()
 
-        model: Model = Model(inputs, outputs)
+        if self.augment:
+            x = augment_batch(x)
 
-        # 하이퍼파라미터로 학습률 조정
-        learning_rate: float = hp.Choice("learning_rate", values=[1e-2, 1e-3, 1e-4])
-        model.compile(
-            optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-            loss="binary_crossentropy",
-            metrics=["accuracy"],
+        mean = x.mean()
+        std = x.std()
+        x = (x - mean) / (std + 1e-6)
+
+        y = torch.tensor(y, dtype=torch.float32)
+
+        return x, y
+
+
+# ----------------------------- 모델 정의 -----------------------------
+class CNNModel(nn.Module):
+    """
+    CNN 모델 정의 클래스
+    """
+
+    def __init__(
+        self,
+        input_shape: Tuple[int, int, int],
+        num_classes: int,
+        dropout_rate: float = 0.5,
+        l2_reg: float = 0.001,
+    ):
+        """
+        모델을 초기화합니다.
+
+        Args:
+            input_shape (Tuple[int, int, int]): 입력 데이터의 형태.
+            num_classes (int): 출력 클래스의 수.
+            dropout_rate (float): 드롭아웃 비율.
+            l2_reg (float): L2 정규화 계수.
+        """
+        super(CNNModel, self).__init__()
+        self.conv1 = nn.Conv2d(1, 128, kernel_size=(3, 3), padding="same")
+        self.pool1 = nn.MaxPool2d((2, 2))
+        self.bn1 = nn.BatchNorm2d(128)
+
+        self.conv2 = nn.Conv2d(128, 64, kernel_size=(3, 3), padding="same")
+        self.pool2 = nn.MaxPool2d((2, 2))
+        self.bn2 = nn.BatchNorm2d(64)
+
+        self.conv3 = nn.Conv2d(64, 32, kernel_size=(3, 3), padding="same")
+        self.pool3 = nn.MaxPool2d((2, 2))
+        self.bn3 = nn.BatchNorm2d(32)
+
+        conv_output_size = self._get_conv_output(input_shape)
+
+        self.flatten = nn.Flatten()
+        self.fc1 = nn.Linear(conv_output_size, 256)
+        self.dropout1 = nn.Dropout(dropout_rate)
+        self.fc2 = nn.Linear(256, 128)
+        self.dropout2 = nn.Dropout(dropout_rate)
+        self.fc3 = nn.Linear(128, 64)
+        self.dropout3 = nn.Dropout(dropout_rate)
+        self.output_layer = nn.Linear(64, num_classes)
+        self.l2_reg = l2_reg
+
+    def _get_conv_output(self, shape: Tuple[int, int, int]) -> int:
+        """
+        합성곱 계층의 출력을 계산합니다.
+
+        Args:
+            shape (Tuple[int, int, int]): 입력 데이터의 형태.
+
+        Returns:
+            int: 합성곱 계층 출력의 크기.
+        """
+        bs = 1
+        input = torch.zeros(bs, *shape)
+        output_feat = self._forward_features(input)
+        n_size = output_feat.data.view(bs, -1).size(1)
+        return n_size
+
+    def _forward_features(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        합성곱 계층을 통과하는 부분입니다.
+
+        Args:
+            x (torch.Tensor): 입력 텐서.
+
+        Returns:
+            torch.Tensor: 합성곱 계층의 출력.
+        """
+        x = self.conv1(x)
+        x = torch.relu(x)
+        x = self.pool1(x)
+        x = self.bn1(x)
+
+        x = self.conv2(x)
+        x = torch.relu(x)
+        x = self.pool2(x)
+        x = self.bn2(x)
+
+        x = self.conv3(x)
+        x = torch.relu(x)
+        x = self.pool3(x)
+        x = self.bn3(x)
+        return x
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        모델의 순전파를 정의합니다.
+
+        Args:
+            x (torch.Tensor): 입력 텐서.
+
+        Returns:
+            torch.Tensor: 모델의 출력.
+        """
+        x = self._forward_features(x)
+        x = x.view(x.size(0), -1)  # Flatten
+        x = self.fc1(x)
+        x = torch.relu(x)
+        x = self.dropout1(x)
+        x = self.fc2(x)
+        x = torch.relu(x)
+        x = self.dropout2(x)
+        x = self.fc3(x)
+        x = torch.relu(x)
+        x = self.dropout3(x)
+        x = self.output_layer(x)
+        x = torch.sigmoid(x)
+        return x
+
+    def l2_regularization(self) -> torch.Tensor:
+        """
+        L2 정규화를 계산합니다.
+
+        Returns:
+            torch.Tensor: L2 정규화 손실 값.
+        """
+        l2_norm = sum(p.pow(2.0).sum() for p in self.parameters())
+        return self.l2_reg * l2_norm
+
+
+# ----------------------------- 모델 학습 및 평가 함수 정의 -----------------------------
+def train_model(
+    model: nn.Module,
+    train_loader: DataLoader,
+    val_loader: DataLoader,
+    criterion,
+    optimizer,
+    num_epochs: int,
+    device: torch.device,
+    sanitized_instrument: str,
+) -> None:
+    """
+    모델을 훈련합니다.
+
+    Args:
+        model (nn.Module): 학습할 모델.
+        train_loader (DataLoader): 훈련 데이터 로더.
+        val_loader (DataLoader): 검증 데이터 로더.
+        criterion: 손실 함수.
+        optimizer: 옵티마이저.
+        num_epochs (int): 에포크 수.
+        device (torch.device): 장치 (CPU 또는 GPU).
+        sanitized_instrument (str): 악기 이름 (파일명에 사용).
+    """
+    best_val_loss = float("inf")
+    patience = 10
+    trigger_times = 0
+
+    print("모델 학습 시작...\n")
+    for epoch in range(num_epochs):
+        model.train()
+        running_loss = 0.0
+        total_correct = 0
+
+        # 훈련 단계
+        train_bar = tqdm(
+            train_loader, desc=f"Epoch [{epoch+1}/{num_epochs}] 훈련 중", leave=False
         )
-        return model
+        for batch_X, batch_Y in train_bar:
+            batch_X = batch_X.to(device)
+            batch_Y = batch_Y.to(device)
+
+            optimizer.zero_grad()
+            outputs = model(batch_X)
+            outputs = outputs.squeeze()
+            loss = criterion(outputs, batch_Y)
+
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item() * batch_X.size(0)
+            preds = (outputs > 0.5).float()
+            total_correct += (preds == batch_Y).sum().item()
+
+            # 배치별 손실 업데이트
+            train_bar.set_postfix({"Loss": f"{loss.item():.4f}"})
+
+        epoch_loss = running_loss / len(train_loader.dataset)
+        epoch_acc = total_correct / len(train_loader.dataset)
+
+        # 검증 단계
+        model.eval()
+        val_loss = 0.0
+        val_correct = 0
+        all_preds = []
+        all_labels = []
+
+        with torch.no_grad():
+            val_bar = tqdm(
+                val_loader, desc=f"Epoch [{epoch+1}/{num_epochs}] 검증 중", leave=False
+            )
+            for batch_X, batch_Y in val_bar:
+                batch_X = batch_X.to(device)
+                batch_Y = batch_Y.to(device)
+
+                outputs = model(batch_X)
+                outputs = outputs.squeeze()
+                loss = criterion(outputs, batch_Y)
+                val_loss += loss.item() * batch_X.size(0)
+                preds = (outputs > 0.5).float()
+                val_correct += (preds == batch_Y).sum().item()
+                all_preds.extend(preds.cpu().numpy())
+                all_labels.extend(batch_Y.cpu().numpy())
+
+        avg_val_loss = val_loss / len(val_loader.dataset)
+        avg_val_acc = val_correct / len(val_loader.dataset)
+
+        # F1-score, Precision, Recall 계산
+        if len(np.unique(all_labels)) > 1:
+            epoch_f1 = f1_score(all_labels, all_preds, average="weighted")
+            epoch_precision = precision_score(
+                all_labels, all_preds, average="weighted", zero_division=0
+            )
+            epoch_recall = recall_score(
+                all_labels, all_preds, average="weighted", zero_division=0
+            )
+        else:
+            epoch_f1 = 0.0
+            epoch_precision = 0.0
+            epoch_recall = 0.0
+
+        # 에포크별 성능 지표 출력
+        tqdm.write(
+            f"Epoch [{epoch+1}/{num_epochs}] 완료 - "
+            f"Train Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.4f}, "
+            f"Val Loss: {avg_val_loss:.4f}, Val Acc: {avg_val_acc:.4f}, "
+            f"Val Precision: {epoch_precision:.4f}, Val Recall: {epoch_recall:.4f}, Val F1-Score: {epoch_f1:.4f}"
+        )
+
+        # Early Stopping 체크
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
+            trigger_times = 0
+            save_model(
+                model,
+                os.path.join(
+                    models_output_dir, f"best_model_{sanitized_instrument}.pt"
+                ),
+            )
+            tqdm.write(f"--> 최고 검증 손실 기록: {best_val_loss:.4f} 저장됨.\n")
+        else:
+            trigger_times += 1
+            tqdm.write(f"--> EarlyStopping 트리거 횟수: {trigger_times}/{patience}\n")
+            if trigger_times >= patience:
+                tqdm.write("Early stopping 발생. 학습 중단.\n")
+                break
+
+        # 학습률 조정
+        if trigger_times > 0 and trigger_times % 5 == 0:
+            for param_group in optimizer.param_groups:
+                param_group["lr"] = param_group["lr"] * 0.5
+            tqdm.write(f"--> 학습률이 {optimizer.param_groups[0]['lr']}로 감소됨.\n")
+
+    tqdm.write(f"모델 학습 완료. 최고 검증 손실: {best_val_loss:.4f}\n")
+
+
+def evaluate_model(
+    model: nn.Module, test_loader: DataLoader, criterion, device: torch.device
+) -> Tuple[float, float, List[float], List[float]]:
+    """
+    모델을 평가합니다.
+
+    Args:
+        model (nn.Module): 평가할 모델.
+        test_loader (DataLoader): 테스트 데이터 로더.
+        criterion: 손실 함수.
+        device (torch.device): 장치 (CPU 또는 GPU).
+
+    Returns:
+        Tuple[float, float, List[float], List[float]]: 테스트 손실, 정확도, 예측 값 리스트, 실제 값 리스트.
+    """
+    model.eval()
+    test_loss = 0.0
+    test_correct = 0
+    all_preds = []
+    all_labels = []
+
+    with torch.no_grad():
+        for batch_X, batch_Y in test_loader:
+            batch_X = batch_X.to(device)
+            batch_Y = batch_Y.to(device)
+            outputs = model(batch_X)
+            outputs = outputs.squeeze()
+            loss = criterion(outputs, batch_Y)
+            test_loss += loss.item() * batch_X.size(0)
+            preds = (outputs > 0.5).float()
+            test_correct += (preds == batch_Y).sum().item()
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(batch_Y.cpu().numpy())
+
+    avg_test_loss = test_loss / len(test_loader.dataset)
+    avg_test_acc = test_correct / len(test_loader.dataset)
+
+    return avg_test_loss, avg_test_acc, all_preds, all_labels
+
+
+def save_model(model: nn.Module, path: str) -> None:
+    """
+    모델을 지정된 경로에 저장합니다.
+
+    Args:
+        model (nn.Module): 저장할 모델.
+        path (str): 저장할 파일 경로.
+    """
+    torch.save(model.state_dict(), path)
+
+
+def load_model(model: nn.Module, path: str, device: torch.device) -> nn.Module:
+    """
+    모델을 지정된 경로에서 로드합니다.
+
+    Args:
+        model (nn.Module): 로드할 모델 구조.
+        path (str): 모델 파일 경로.
+        device (torch.device): 장치 (CPU 또는 GPU).
+
+    Returns:
+        nn.Module: 로드된 모델.
+    """
+    model.load_state_dict(torch.load(path, map_location=device))
+    return model
+
+
+# ----------------------------- 하이퍼파라미터 튜닝 함수 정의 -----------------------------
+if APPLY_HYPERPARAMETER_TUNING:
+    import optuna
+
+    def objective(
+        trial: optuna.Trial,
+        X_train: np.ndarray,
+        Y_train_binary: np.ndarray,
+        X_val: np.ndarray,
+        Y_val_binary: np.ndarray,
+        input_shape: Tuple[int, int, int],
+        device: torch.device,
+        sanitized_instrument: str,
+    ) -> float:
+        """
+        Optuna를 사용한 하이퍼파라미터 최적화 목적 함수
+
+        Args:
+            trial (optuna.Trial): Optuna trial 객체
+            X_train (np.ndarray): 훈련 데이터 특징
+            Y_train_binary (np.ndarray): 훈련 데이터 레이블
+            X_val (np.ndarray): 검증 데이터 특징
+            Y_val_binary (np.ndarray): 검증 데이터 레이블
+            input_shape (Tuple[int, int, int]): 모델 입력 형태
+            device (torch.device): 장치 (CPU 또는 GPU)
+            sanitized_instrument (str): 악기 이름 (파일명에 사용)
+
+        Returns:
+            float: 검증 손실 값
+        """
+        # 하이퍼파라미터 범위 설정
+        learning_rate = trial.suggest_loguniform("learning_rate", 1e-5, 1e-3)
+        dropout_rate = trial.suggest_uniform("dropout_rate", 0.3, 0.7)
+        num_epochs = trial.suggest_int("num_epochs", 10, 30)
+
+        # 모델 정의
+        num_classes = 1
+        model = CNNModel(input_shape, num_classes, dropout_rate=dropout_rate).to(device)
+
+        # 옵티마이저와 손실 함수 설정
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+        criterion = nn.BCELoss()
+
+        # 데이터셋 및 데이터로더 생성
+        train_dataset = MFCCDataset(X_train, Y_train_binary, augment=True)
+        val_dataset = MFCCDataset(X_val, Y_val_binary, augment=False)
+
+        train_loader = DataLoader(
+            train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
+        )
+        val_loader = DataLoader(
+            val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
+        )
+
+        # 모델 훈련
+        train_model(
+            model=model,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            criterion=criterion,
+            optimizer=optimizer,
+            num_epochs=num_epochs,
+            device=device,
+            sanitized_instrument=sanitized_instrument,
+        )
+
+        # 검증 손실 계산
+        avg_val_loss, _, _, _ = evaluate_model(
+            model=model, test_loader=val_loader, criterion=criterion, device=device
+        )
+
+        return avg_val_loss
 
 
 # ----------------------------- 메인 실행 부분 -----------------------------
 if __name__ == "__main__":
-    # 1. 메타데이터 로드
+    # 메타데이터 로드
     print("메타데이터 로드 중...")
-    metadata: List[Dict[str, Any]] = load_metadata(metadata_file)
+    metadata = load_metadata(metadata_file)
     print(f"메타데이터 로드 완료: {len(metadata)} 샘플")
 
-    # 2. 데이터 전처리 및 저장 (이미 전처리된 데이터가 없을 경우)
+    # 데이터 전처리 및 저장
     if not os.path.exists(hdf5_file):
         print("데이터 전처리 시작...")
         preprocess_and_save_data(metadata, data_output_dir, hdf5_file)
@@ -532,12 +710,12 @@ if __name__ == "__main__":
     else:
         print("전처리된 데이터 파일이 존재합니다. 로드합니다.")
 
-    # 3. 전처리된 데이터 로드
+    # 전처리된 데이터 로드
     print("전처리된 데이터 로드 중...")
     X, Y = load_preprocessed_data(hdf5_file)
     print(f"전처리된 데이터 로드 완료: X shape={X.shape}, Y shape={Y.shape}")
 
-    # 4. 레이블 인코딩
+    # 레이블 인코딩
     print("레이블 인코딩 중...")
     Y_encoded, mlb, all_instruments = encode_labels(Y)
     print(f"레이블 인코딩 완료: {len(all_instruments)} 종류의 악기")
@@ -545,7 +723,7 @@ if __name__ == "__main__":
     if len(all_instruments) == 0:
         raise ValueError("레이블 인코딩 실패: 악기 리스트가 비어 있습니다.")
 
-    # 5. 데이터셋 분할
+    # 데이터셋 분할
     print("데이터셋 분할 중...")
     X_train, X_temp, Y_train, Y_temp = train_test_split(
         X, Y_encoded, test_size=0.2, random_state=42
@@ -558,241 +736,110 @@ if __name__ == "__main__":
     print(f" - 검증 세트: {X_val.shape[0]} 샘플")
     print(f" - 테스트 세트: {X_test.shape[0]} 샘플")
 
-    # 6. 개별 악기별 모델 구축 및 학습
+    # 개별 악기별 모델 구축 및 학습
     print("개별 악기별 모델 구축 및 학습 시작...")
 
     for idx, instrument in enumerate(all_instruments):
-        sanitized_instrument: str = sanitize_name(instrument)
+        sanitized_instrument = sanitize_name(instrument)
         print(f"\n=== 악기: {instrument} ({idx + 1}/{len(all_instruments)}) ===")
 
         # 이진 레이블 생성
-        Y_train_binary: np.ndarray = Y_train[:, idx]
-        Y_val_binary: np.ndarray = Y_val[:, idx]
-        Y_test_binary: np.ndarray = Y_test[:, idx]
-
-        # SMOTE를 사용하여 데이터 불균형 처리 여부 결정
-        if APPLY_SMOTE:
-            print("SMOTE를 사용하여 데이터 불균형 처리 중...")
-            from imblearn.over_sampling import SMOTE
-
-            smote: SMOTE = SMOTE(random_state=42)
-            try:
-                X_train_balanced, Y_train_balanced = smote.fit_resample(
-                    X_train.reshape(X_train.shape[0], -1), Y_train_binary
-                )
-                # 재구성된 X_train_balanced를 원래의 형태로 변환
-                X_train_balanced = X_train_balanced.reshape(-1, n_mfcc, max_len)
-                print(f"SMOTE 적용 완료: {X_train_balanced.shape[0]} 샘플")
-            except Exception as e:
-                print(f"SMOTE 적용 실패: {e}")
-                # SMOTE 실패 시 원본 데이터 사용
-                X_train_balanced, Y_train_balanced = X_train, Y_train_binary
-        else:
-            print("SMOTE를 사용하지 않습니다.")
-            X_train_balanced, Y_train_balanced = X_train, Y_train_binary
+        Y_train_binary = Y_train[:, idx]
+        Y_val_binary = Y_val[:, idx]
+        Y_test_binary = Y_test[:, idx]
 
         # 클래스 가중치 설정
-        if not APPLY_SMOTE:
-            # 클래스 가중치 계산 (binary classification)
-            classes: np.ndarray = np.unique(Y_train_binary)
-            class_weights: np.ndarray = compute_class_weight(
+        classes = np.unique(Y_train_binary)
+        if len(classes) > 1:
+            class_weights = compute_class_weight(
                 class_weight="balanced", classes=classes, y=Y_train_binary
             )
-            class_weight_dict: Dict[int, float] = {
+            class_weight_dict = {
                 cls: weight for cls, weight in zip(classes, class_weights)
             }
             print(f"클래스 가중치 계산 완료: {class_weight_dict}")
         else:
-            # SMOTE 적용 시 클래스 가중치 설정하지 않음
-            class_weight_dict: Any = None
-            print("SMOTE 적용으로 클래스 가중치 설정하지 않습니다.")
+            class_weight_dict = None
+            print("클래스가 하나이므로 클래스 가중치를 적용하지 않습니다.")
 
-        if ENABLE_HYPERPARAMETER_TUNING:
-            # 하이퍼파라미터 튜닝을 사용하는 경우
-            print("하이퍼파라미터 튜닝 시작...")
-            input_shape: Tuple[int, int, int] = (n_mfcc, max_len, 1)
-            hypermodel: InstrumentHyperModel = InstrumentHyperModel(
-                input_shape, num_classes=1
-            )
-
-            # 프로젝트 이름을 악기 이름으로 고유하게 생성
-            project_name: str = f"hypermodel_{sanitized_instrument}"
-
-            tuner: kt.BayesianOptimization = kt.BayesianOptimization(
-                hypermodel,
-                objective="val_accuracy",
-                max_trials=10,  # MAX_TRIALS 값을 직접 지정
-                executions_per_trial=1,
-                directory=kt_directory,
-                project_name=project_name,
-                overwrite=True,
-            )
-
-            # 데이터셋 생성
-            tuner_train_gen: tf.data.Dataset = data_generator(
-                X_train_balanced,
-                Y_train_balanced,
-                batch_size=BATCH_SIZE,
-                shuffle=True,
-                augment=True,
-            )
-            tuner_val_gen: tf.data.Dataset = data_generator(
-                X_val,
-                Y_val_binary,
-                batch_size=BATCH_SIZE,
-                shuffle=False,
-                augment=False,
-            )
-
-            # 학습률 스케줄러 설정
-            lr_scheduler: tf.keras.callbacks.ReduceLROnPlateau = ReduceLROnPlateau(
-                monitor="val_loss", factor=0.5, patience=5, verbose=1, min_lr=1e-6
-            )
-
-            # 튜너 검색 수행
-            tuner.search(
-                tuner_train_gen,
-                validation_data=tuner_val_gen,
-                epochs=EPOCHS,
-                steps_per_epoch=math.ceil(len(Y_train_balanced) / BATCH_SIZE),
-                validation_steps=math.ceil(len(Y_val_binary) / BATCH_SIZE),
-                callbacks=[
-                    EarlyStopping(
-                        monitor="val_loss",
-                        patience=10,  # patience 값을 늘려서 모델이 충분히 학습하도록
-                        restore_best_weights=True,
-                    ),
-                    lr_scheduler,
-                ],
-            )
-
-            # 최적의 하이퍼파라미터와 모델을 가져오기
-            best_model: Model = tuner.get_best_models(num_models=1)[0]
-            best_hyperparameters: kt.HyperParameters = tuner.get_best_hyperparameters(
-                num_trials=1
-            )[0]
-            print(f"최적의 하이퍼파라미터: {best_hyperparameters.values}")
-
-        else:
-            # 하이퍼파라미터 튜닝을 사용하지 않는 경우
-            # 모델 구축
-            input_shape: Tuple[int, int, int] = (n_mfcc, max_len, 1)
-            num_classes: int = 1  # 이진 분류
-            model: Model = build_model(
-                input_shape, num_classes, dropout_rate=0.5, l2_reg=0.001
-            )
-
-            # 옵티마이저 설정
-            optimizer: tf.keras.optimizers.Optimizer = tf.keras.optimizers.Adam(
-                learning_rate=LEARNING_RATE
-            )
-
-            # 모델 컴파일
-            model.compile(
-                optimizer=optimizer,
-                loss="binary_crossentropy",
-                metrics=["accuracy"],
-            )
-
-            # 모델 요약 출력
-            model.summary()
-
-            best_model = model  # 모델 할당
-
-        # 모델 훈련을 위한 데이터셋 생성
-        train_gen: tf.data.Dataset = data_generator(
-            X_train_balanced,
-            Y_train_balanced,
-            batch_size=BATCH_SIZE,
-            shuffle=True,
-            augment=True,
-        )
-        val_gen: tf.data.Dataset = data_generator(
-            X_val, Y_val_binary, batch_size=BATCH_SIZE, shuffle=False, augment=False
-        )
-        test_gen: tf.data.Dataset = data_generator(
-            X_test, Y_test_binary, batch_size=BATCH_SIZE, shuffle=False, augment=False
-        )
-
-        # 데이터셋의 크기 계산 (ceil 사용)
-        train_steps: int = math.ceil(len(Y_train_balanced) / BATCH_SIZE)
-        val_steps: int = math.ceil(len(Y_val_binary) / BATCH_SIZE)
-        test_steps: int = math.ceil(len(Y_test_binary) / BATCH_SIZE)
-
-        # 모델 저장 디렉토리 설정
-        tensorboard_log_dir: str = os.path.join(logs_dir, f"{sanitized_instrument}")
-        os.makedirs(tensorboard_log_dir, exist_ok=True)
-
-        # CSVLogger 로그 파일 경로 설정
-        csv_logger_path: str = os.path.join(
-            logs_dir, f"{sanitized_instrument}_training.log"
-        )
-
-        # 콜백 설정 (EarlyStopping, ModelCheckpoint, TensorBoard, CSVLogger)
-        callbacks: List[tf.keras.callbacks.Callback] = []
-        if ENABLE_TENSORBOARD:
-            callbacks.append(
-                TensorBoard(
-                    log_dir=tensorboard_log_dir,
-                    histogram_freq=0,
-                    write_graph=False,
-                    write_images=False,
-                    update_freq="epoch",
-                )
-            )
-        if ENABLE_CSVLOGGER:
-            callbacks.append(CSVLogger(csv_logger_path, append=True, separator=","))
-
-        # EarlyStopping 및 ReduceLROnPlateau 설정
-        callbacks.append(
-            EarlyStopping(
-                monitor="val_loss",
-                patience=10,  # patience 값을 늘려서 모델이 충분히 학습하도록
-                verbose=1,
-                restore_best_weights=True,
-            )
-        )
-        lr_scheduler: tf.keras.callbacks.ReduceLROnPlateau = ReduceLROnPlateau(
-            monitor="val_loss", factor=0.5, patience=5, verbose=1, min_lr=1e-6
-        )
-        callbacks.append(lr_scheduler)
-
-        # 모델 체크포인트 설정
-        callbacks.append(
-            ModelCheckpoint(
-                os.path.join(
-                    models_output_dir, f"best_model_{sanitized_instrument}.keras"
+        # 하이퍼파라미터 튜닝 적용 여부에 따른 처리
+        if APPLY_HYPERPARAMETER_TUNING:
+            print("하이퍼파라미터 튜닝을 수행합니다...")
+            study = optuna.create_study(direction="minimize")
+            study.optimize(
+                lambda trial: objective(
+                    trial,
+                    X_train,
+                    Y_train_binary,
+                    X_val,
+                    Y_val_binary,
+                    input_shape=(1, max_len, n_mfcc),
+                    device=device,
+                    sanitized_instrument=sanitized_instrument,
                 ),
-                monitor="val_loss",
-                save_best_only=True,
-                verbose=1,
-                save_weights_only=False,
+                n_trials=20,
             )
+
+            # 최적의 하이퍼파라미터로 모델 재훈련
+            best_params = study.best_params
+            print("최적의 하이퍼파라미터:")
+            for key, value in best_params.items():
+                print(f"  {key}: {value}")
+
+            learning_rate = best_params["learning_rate"]
+            dropout_rate = best_params["dropout_rate"]
+            num_epochs = best_params["num_epochs"]
+        else:
+            learning_rate = LEARNING_RATE
+            dropout_rate = 0.5
+            num_epochs = EPOCHS
+
+        # 모델 구축
+        input_shape = (1, max_len, n_mfcc)
+        num_classes = 1
+        model = CNNModel(input_shape, num_classes, dropout_rate=dropout_rate).to(device)
+
+        # 옵티마이저와 손실 함수 설정
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+        criterion = nn.BCELoss()
+
+        # 데이터셋 및 데이터로더 생성
+        train_dataset = MFCCDataset(X_train, Y_train_binary, augment=True)
+        val_dataset = MFCCDataset(X_val, Y_val_binary, augment=False)
+        test_dataset = MFCCDataset(X_test, Y_test_binary, augment=False)
+
+        train_loader = DataLoader(
+            train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
+        )
+        val_loader = DataLoader(
+            val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
+        )
+        test_loader = DataLoader(
+            test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
         )
 
         # 모델 훈련
         print("모델 훈련 시작...")
-        try:
-            history = best_model.fit(
-                train_gen,
-                steps_per_epoch=train_steps,
-                validation_data=val_gen,
-                validation_steps=val_steps,
-                epochs=EPOCHS,
-                callbacks=callbacks,
-                class_weight=class_weight_dict,
-            )
-            print("모델 훈련 완료.")
-        except Exception as e:
-            print(f"모델 훈련 중 오류 발생: {e}")
-            continue
+        train_model(
+            model=model,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            criterion=criterion,
+            optimizer=optimizer,
+            num_epochs=num_epochs,
+            device=device,
+            sanitized_instrument=sanitized_instrument,
+        )
+        print("모델 훈련 완료.")
 
-        # 최상의 모델 로드 (.keras 형식)
+        # 최상의 모델 로드
         try:
-            best_model = tf.keras.models.load_model(
+            model = load_model(
+                model,
                 os.path.join(
-                    models_output_dir, f"best_model_{sanitized_instrument}.keras"
-                )
+                    models_output_dir, f"best_model_{sanitized_instrument}.pt"
+                ),
+                device,
             )
         except Exception as e:
             print(f"모델 로드 중 오류 발생: {e}")
@@ -800,107 +847,96 @@ if __name__ == "__main__":
 
         # 모델 평가
         print("모델 평가 중...")
-        try:
-            loss: float
-            accuracy: float
-            loss, accuracy = best_model.evaluate(test_gen, steps=test_steps)
-            print(f"테스트 손실: {loss}")
-            print(f"테스트 정확도: {accuracy}")
-        except Exception as e:
-            print(f"모델 평가 중 오류 발생: {e}")
-
-        # 예측 값 계산
-        print("예측 계산 중...")
-        try:
-            Y_pred: np.ndarray = best_model.predict(test_gen, steps=test_steps)
-            Y_pred_binary: np.ndarray = (Y_pred > 0.5).astype(int).reshape(-1, 1)
-        except Exception as e:
-            print(f"예측 계산 중 오류 발생: {e}")
-            Y_pred_binary = np.zeros_like(Y_test_binary).reshape(-1, 1)
+        avg_test_loss, avg_test_acc, all_preds, all_labels = evaluate_model(
+            model=model, test_loader=test_loader, criterion=criterion, device=device
+        )
+        print(f"테스트 손실: {avg_test_loss}")
+        print(f"테스트 정확도: {avg_test_acc}")
 
         # F1-score 계산
         if len(np.unique(Y_test_binary)) > 1:
-            f1: float = f1_score(Y_test_binary, Y_pred_binary, average="binary")
+            f1 = f1_score(all_labels, all_preds, average="binary")
             print(f"F1-score: {f1}")
         else:
             print("F1-score 계산 불가: 테스트 세트에 하나의 클래스만 존재합니다.")
 
         # 분류 리포트 출력
         if len(np.unique(Y_test_binary)) > 1:
-            report: str = classification_report(
-                Y_test_binary,
-                Y_pred_binary,
+            report = classification_report(
+                all_labels,
+                all_preds,
                 target_names=["Not " + instrument, instrument],
             )
             print(report)
         else:
             print("분류 리포트 출력 불가: 테스트 세트에 하나의 클래스만 존재합니다.")
 
-        # 모델 저장 (이미 ModelCheckpoint로 저장됨)
-        print(f"모델 저장 완료: best_model_{sanitized_instrument}.keras")
+        # 모델 저장
+        print(f"모델 저장 완료: best_model_{sanitized_instrument}.pt")
 
-        # ----------------------------- 세션 및 메모리 정리 -----------------------------
-        # 현재 모델과 데이터 제너레이터를 메모리에서 삭제
+        # 메모리 정리
         try:
-            del best_model
-            del train_gen
-            del val_gen
-            del test_gen
+            del model
+            del train_loader
+            del val_loader
+            del test_loader
         except:
             pass
         gc.collect()
-        tf.keras.backend.clear_session()
+        if device.type == "cuda":
+            torch.cuda.empty_cache()
 
     print("\n모든 악기별 모델 학습 및 저장 완료.")
 
-    # 7. 전체 모델 평가 (선택 사항)
+    # 전체 모델 평가
     print("\n모든 악기별 모델을 사용하여 테스트 세트에서 악기 식별 중...")
-    predictions: Dict[str, np.ndarray] = {}
+    predictions = {}
     for idx, instrument in enumerate(all_instruments):
-        sanitized_instrument: str = sanitize_name(instrument)
+        sanitized_instrument = sanitize_name(instrument)
         print(f"예측 중: {instrument}")
-        # 모델 로드 (.keras 형식)
-        model_path: str = os.path.join(
-            models_output_dir, f"best_model_{sanitized_instrument}.keras"
+        # 모델 로드
+        model_path = os.path.join(
+            models_output_dir, f"best_model_{sanitized_instrument}.pt"
         )
         if not os.path.exists(model_path):
             print(f"모델 파일이 존재하지 않습니다: {model_path}")
             continue
         try:
-            model: Model = tf.keras.models.load_model(model_path)
+            model = CNNModel(input_shape, num_classes).to(device)
+            model = load_model(model, model_path, device)
+            model.eval()
         except Exception as e:
             print(f"모델 로드 중 오류 발생 ({instrument}): {e}")
             continue
 
         # 예측
-        try:
-            Y_pred: np.ndarray = model.predict(test_gen, steps=test_steps)
-            Y_pred_binary: np.ndarray = (Y_pred > 0.5).astype(int).reshape(-1, 1)
-            predictions[instrument] = Y_pred_binary.flatten()
-        except Exception as e:
-            print(f"모델 예측 중 오류 발생 ({instrument}): {e}")
-            predictions[instrument] = np.zeros(len(Y_test_binary), dtype=int)
-
+        all_preds = []
+        with torch.no_grad():
+            for batch_X, _ in test_loader:
+                batch_X = batch_X.to(device)
+                outputs = model(batch_X)
+                outputs = outputs.squeeze()
+                preds = (outputs > 0.5).float()
+                all_preds.extend(preds.cpu().numpy())
+            predictions[instrument] = np.array(all_preds)
         # 메모리 정리
         try:
             del model
         except:
             pass
         gc.collect()
-        tf.keras.backend.clear_session()
+        if device.type == "cuda":
+            torch.cuda.empty_cache()
 
     print("악기 식별 완료.")
 
-    # 8. 사용자 평가 준비 (생략)
+    # 예측 결과 저장
     print("사용자 평가를 위한 예측 결과를 저장합니다.")
-    # 예측 결과를 저장할 배열 생성
-    predictions_list: List[np.ndarray] = [
+    predictions_list = [
         predictions[instrument]
         for instrument in all_instruments
         if instrument in predictions
     ]
-    predictions_array: np.ndarray = np.array(
-        predictions_list
-    ).T  # shape=(samples, instruments)
+    predictions_array = np.array(predictions_list).T  # shape=(samples, instruments)
     np.save(os.path.join(data_output_dir, "predictions.npy"), predictions_array)
     print("예측 결과 저장 완료: predictions.npy")
