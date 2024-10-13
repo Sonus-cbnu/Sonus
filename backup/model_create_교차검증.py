@@ -7,7 +7,7 @@ from tqdm import tqdm
 import h5py
 
 from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import (
     classification_report,
     f1_score,
@@ -32,6 +32,7 @@ from typing import List, Tuple, Dict, Any
 BATCH_SIZE = 256  # 배치 크기 설정
 EPOCHS = 20  # 에포크 수 설정
 LEARNING_RATE = 1e-4  # 학습률 설정
+NUM_FOLDS = 5  # 교차 검증 폴드 수 설정
 
 # 데이터 관련 설정
 data_output_dir = "./data"  # 데이터 출력 디렉토리
@@ -52,7 +53,7 @@ os.makedirs(logs_dir, exist_ok=True)
 APPLY_HYPERPARAMETER_TUNING = False  # 하이퍼파라미터 튜닝 적용 여부
 
 # ----------------------------- GPU 및 CPU 설정 -----------------------------
-device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"사용 중인 디바이스: {device}\n")
 
 # CPU 사용 제한 설정
@@ -744,17 +745,13 @@ if __name__ == "__main__":
     if len(all_instruments) == 0:
         raise ValueError("레이블 인코딩 실패: 악기 리스트가 비어 있습니다.")
 
-    # 데이터셋 분할
+    # 데이터셋 분할 (테스트 세트 분리)
     print("데이터셋 분할 중...")
-    X_train, X_temp, Y_train, Y_temp = train_test_split(
+    X_train_val, X_test, Y_train_val, Y_test = train_test_split(
         X, Y_encoded, test_size=0.2, random_state=42
     )
-    X_val, X_test, Y_val, Y_test = train_test_split(
-        X_temp, Y_temp, test_size=0.5, random_state=42
-    )
     print(f"데이터셋 분할 완료:")
-    print(f" - 훈련 세트: {X_train.shape[0]} 샘플")
-    print(f" - 검증 세트: {X_val.shape[0]} 샘플")
+    print(f" - 훈련+검증 세트: {X_train_val.shape[0]} 샘플")
     print(f" - 테스트 세트: {X_test.shape[0]} 샘플")
 
     # 개별 악기별 모델 구축 및 학습
@@ -765,106 +762,176 @@ if __name__ == "__main__":
         print(f"\n=== 악기: {instrument} ({idx + 1}/{len(all_instruments)}) ===")
 
         # 이진 레이블 생성
-        Y_train_binary = Y_train[:, idx]
-        Y_val_binary = Y_val[:, idx]
+        Y_train_val_binary = Y_train_val[:, idx]
         Y_test_binary = Y_test[:, idx]
 
         # 클래스 가중치 설정
-        classes = np.unique(Y_train_binary)
+        classes = np.unique(Y_train_val_binary)
         if len(classes) > 1:
             class_weights = compute_class_weight(
-                class_weight="balanced", classes=classes, y=Y_train_binary
+                class_weight="balanced", classes=classes, y=Y_train_val_binary
             )
             pos_weight = class_weights[1] / class_weights[0]
             pos_weight_tensor = torch.tensor(pos_weight, dtype=torch.float32).to(device)
-            criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight_tensor)
             print(f"pos_weight 적용 완료: {pos_weight}")
         else:
             pos_weight_tensor = None
-            criterion = nn.BCEWithLogitsLoss()
             print("클래스가 하나이므로 pos_weight를 적용하지 않습니다.")
 
-        # 하이퍼파라미터 튜닝 적용 여부에 따른 처리
-        if APPLY_HYPERPARAMETER_TUNING:
-            print("하이퍼파라미터 튜닝을 수행합니다...")
-            study = optuna.create_study(direction="minimize")
-            study.optimize(
-                lambda trial: objective(
-                    trial,
-                    X_train,
-                    Y_train_binary,
-                    X_val,
-                    Y_val_binary,
-                    input_shape=(1, n_mfcc, max_len),
-                    device=device,
-                    sanitized_instrument=sanitized_instrument,
-                ),
-                n_trials=20,
+        # 손실 함수 정의
+        if pos_weight_tensor is not None:
+            criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight_tensor)
+        else:
+            criterion = nn.BCEWithLogitsLoss()
+
+        # K-Fold 교차 검증 설정
+        skf = StratifiedKFold(n_splits=NUM_FOLDS, shuffle=True, random_state=42)
+
+        fold = 1
+        best_val_loss_overall = float("inf")
+        best_model_path = os.path.join(
+            models_output_dir, f"best_model_{sanitized_instrument}.pt"
+        )
+
+        for train_index, val_index in skf.split(X_train_val, Y_train_val_binary):
+            print(f"\n--- Fold {fold}/{NUM_FOLDS} ---")
+
+            X_train, X_val = X_train_val[train_index], X_train_val[val_index]
+            Y_train_binary, Y_val_binary = (
+                Y_train_val_binary[train_index],
+                Y_train_val_binary[val_index],
             )
 
-            # 최적의 하이퍼파라미터로 모델 재훈련
-            best_params = study.best_params
-            print("최적의 하이퍼파라미터:")
-            for key, value in best_params.items():
-                print(f"  {key}: {value}")
+            # 하이퍼파라미터 튜닝 적용 여부에 따른 처리
+            if APPLY_HYPERPARAMETER_TUNING:
+                print("하이퍼파라미터 튜닝을 수행합니다...")
+                study = optuna.create_study(direction="minimize")
+                study.optimize(
+                    lambda trial: objective(
+                        trial,
+                        X_train,
+                        Y_train_binary,
+                        X_val,
+                        Y_val_binary,
+                        input_shape=(1, n_mfcc, max_len),
+                        device=device,
+                        sanitized_instrument=sanitized_instrument,
+                    ),
+                    n_trials=20,
+                )
 
-            learning_rate = best_params["learning_rate"]
-            dropout_rate = best_params["dropout_rate"]
-            num_epochs = best_params["num_epochs"]
-        else:
-            learning_rate = LEARNING_RATE
-            dropout_rate = 0.5
-            num_epochs = EPOCHS
+                # 최적의 하이퍼파라미터로 모델 재훈련
+                best_params = study.best_params
+                print("최적의 하이퍼파라미터:")
+                for key, value in best_params.items():
+                    print(f"  {key}: {value}")
 
-        # 모델 구축
-        input_shape = (1, n_mfcc, max_len)
-        num_classes = 1
-        model = CNNModel(input_shape, num_classes, dropout_rate=dropout_rate).to(device)
+                learning_rate = best_params["learning_rate"]
+                dropout_rate = best_params["dropout_rate"]
+                num_epochs = best_params["num_epochs"]
+            else:
+                learning_rate = LEARNING_RATE
+                dropout_rate = 0.5
+                num_epochs = EPOCHS
 
-        # 옵티마이저 설정
-        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+            # 모델 구축
+            input_shape = (1, n_mfcc, max_len)
+            num_classes = 1
+            model = CNNModel(input_shape, num_classes, dropout_rate=dropout_rate).to(
+                device
+            )
 
-        # 데이터셋 및 데이터로더 생성
-        train_dataset = MFCCDataset(X_train, Y_train_binary, augment=True)
-        val_dataset = MFCCDataset(X_val, Y_val_binary, augment=False)
-        test_dataset = MFCCDataset(X_test, Y_test_binary, augment=False)
+            # 옵티마이저 설정
+            optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-        train_loader = DataLoader(
-            train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
+            # 데이터셋 및 데이터로더 생성
+            train_dataset = MFCCDataset(X_train, Y_train_binary, augment=True)
+            val_dataset = MFCCDataset(X_val, Y_val_binary, augment=False)
+
+            train_loader = DataLoader(
+                train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0
+            )
+            val_loader = DataLoader(
+                val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
+            )
+
+            # 모델 훈련
+            print("모델 훈련 시작...")
+            train_model(
+                model=model,
+                train_loader=train_loader,
+                val_loader=val_loader,
+                criterion=criterion,
+                optimizer=optimizer,
+                num_epochs=num_epochs,
+                device=device,
+                sanitized_instrument=sanitized_instrument,
+            )
+            print("모델 훈련 완료.")
+
+            # 최상의 모델 로드 및 검증 손실 비교
+            try:
+                model = load_model(
+                    model,
+                    os.path.join(
+                        models_output_dir, f"best_model_{sanitized_instrument}.pt"
+                    ),
+                    device,
+                )
+                # 현재 폴드의 검증 손실 비교
+                current_val_loss, _, _, _ = evaluate_model(
+                    model=model,
+                    test_loader=val_loader,
+                    criterion=criterion,
+                    device=device,
+                )
+                if current_val_loss < best_val_loss_overall:
+                    best_val_loss_overall = current_val_loss
+                    # 전체 최적 모델 경로 업데이트
+                    save_model(model, best_model_path)
+                    print(
+                        f"--> Fold {fold}에서 더 나은 검증 손실 {best_val_loss_overall:.4f}로 업데이트됨."
+                    )
+            except Exception as e:
+                print(f"모델 로드 중 오류 발생: {e}")
+                continue
+
+            # 메모리 정리
+            try:
+                del model
+                del train_loader
+                del val_loader
+            except:
+                pass
+            gc.collect()
+            if device.type == "cuda":
+                torch.cuda.empty_cache()
+
+            fold += 1
+
+        print(
+            f"\n최종 최고 검증 손실: {best_val_loss_overall:.4f} 저장됨: {best_model_path}"
         )
-        val_loader = DataLoader(
-            val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
-        )
-        test_loader = DataLoader(
-            test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
-        )
-
-        # 모델 훈련
-        print("모델 훈련 시작...")
-        train_model(
-            model=model,
-            train_loader=train_loader,
-            val_loader=val_loader,
-            criterion=criterion,
-            optimizer=optimizer,
-            num_epochs=num_epochs,
-            device=device,
-            sanitized_instrument=sanitized_instrument,
-        )
-        print("모델 훈련 완료.")
 
         # 최상의 모델 로드
         try:
+            model = CNNModel(input_shape, num_classes, dropout_rate=dropout_rate).to(
+                device
+            )
             model = load_model(
                 model,
-                os.path.join(
-                    models_output_dir, f"best_model_{sanitized_instrument}.pt"
-                ),
+                best_model_path,
                 device,
             )
         except Exception as e:
             print(f"모델 로드 중 오류 발생: {e}")
             continue
+
+        # 테스트 데이터셋 및 데이터로더 생성
+        test_dataset = MFCCDataset(X_test, Y_test_binary, augment=False)
+        test_loader = DataLoader(
+            test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
+        )
 
         # 모델 평가
         print("모델 평가 중...")
@@ -892,14 +959,9 @@ if __name__ == "__main__":
         else:
             print("분류 리포트 출력 불가: 테스트 세트에 하나의 클래스만 존재합니다.")
 
-        # 모델 저장
-        print(f"모델 저장 완료: best_model_{sanitized_instrument}.pt")
-
         # 메모리 정리
         try:
             del model
-            del train_loader
-            del val_loader
             del test_loader
         except:
             pass
@@ -929,6 +991,12 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"모델 로드 중 오류 발생 ({instrument}): {e}")
             continue
+
+        # 테스트 데이터셋 및 데이터로더 생성
+        test_dataset = MFCCDataset(X_test, Y_test[:, idx], augment=False)
+        test_loader = DataLoader(
+            test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0
+        )
 
         # 예측
         all_preds = []
