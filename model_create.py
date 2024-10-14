@@ -317,17 +317,14 @@ class CNNModel(nn.Module):
         """
         super(CNNModel, self).__init__()
         self.conv1 = nn.Conv2d(1, 128, kernel_size=(3, 3), padding="same")
-        self.dropout_conv1 = nn.Dropout(dropout_rate)  # 컨볼루션 층 후 드롭아웃 추가
         self.pool1 = nn.MaxPool2d((2, 2))
         self.bn1 = nn.BatchNorm2d(128)
 
         self.conv2 = nn.Conv2d(128, 64, kernel_size=(3, 3), padding="same")
-        self.dropout_conv2 = nn.Dropout(dropout_rate)  # 컨볼루션 층 후 드롭아웃 추가
         self.pool2 = nn.MaxPool2d((2, 2))
         self.bn2 = nn.BatchNorm2d(64)
 
         self.conv3 = nn.Conv2d(64, 32, kernel_size=(3, 3), padding="same")
-        self.dropout_conv3 = nn.Dropout(dropout_rate)  # 컨볼루션 층 후 드롭아웃 추가
         self.pool3 = nn.MaxPool2d((2, 2))
         self.bn3 = nn.BatchNorm2d(32)
 
@@ -371,19 +368,16 @@ class CNNModel(nn.Module):
         """
         x = self.conv1(x)
         x = torch.relu(x)
-        x = self.dropout_conv1(x)  # 드롭아웃 적용
         x = self.pool1(x)
         x = self.bn1(x)
 
         x = self.conv2(x)
         x = torch.relu(x)
-        x = self.dropout_conv2(x)  # 드롭아웃 적용
         x = self.pool2(x)
         x = self.bn2(x)
 
         x = self.conv3(x)
         x = torch.relu(x)
-        x = self.dropout_conv3(x)  # 드롭아웃 적용
         x = self.pool3(x)
         x = self.bn3(x)
         return x
@@ -410,7 +404,7 @@ class CNNModel(nn.Module):
         x = torch.relu(x)
         x = self.dropout3(x)
         x = self.output_layer(x)
-        # 시그모이드 제거: nn.BCEWithLogitsLoss가 내부적으로 시그모이드를 적용
+        x = torch.sigmoid(x)
         return x
 
     def l2_regularization(self) -> torch.Tensor:
@@ -470,13 +464,12 @@ def train_model(
             outputs = model(batch_X)
             outputs = outputs.squeeze()
             loss = criterion(outputs, batch_Y)
-            loss += model.l2_regularization()  # L2 정규화 추가
 
             loss.backward()
             optimizer.step()
 
             running_loss += loss.item() * batch_X.size(0)
-            preds = (torch.sigmoid(outputs) > 0.5).float()  # 시그모이드 적용 후 임계값
+            preds = (outputs > 0.5).float()
             total_correct += (preds == batch_Y).sum().item()
 
             # 배치별 손실 업데이트
@@ -504,7 +497,7 @@ def train_model(
                 outputs = outputs.squeeze()
                 loss = criterion(outputs, batch_Y)
                 val_loss += loss.item() * batch_X.size(0)
-                preds = (torch.sigmoid(outputs) > 0.5).float()
+                preds = (outputs > 0.5).float()
                 val_correct += (preds == batch_Y).sum().item()
                 all_preds.extend(preds.cpu().numpy())
                 all_labels.extend(batch_Y.cpu().numpy())
@@ -514,12 +507,12 @@ def train_model(
 
         # F1-score, Precision, Recall 계산
         if len(np.unique(all_labels)) > 1:
-            epoch_f1 = f1_score(all_labels, all_preds, average="binary")
+            epoch_f1 = f1_score(all_labels, all_preds, average="weighted")
             epoch_precision = precision_score(
-                all_labels, all_preds, average="binary", zero_division=0
+                all_labels, all_preds, average="weighted", zero_division=0
             )
             epoch_recall = recall_score(
-                all_labels, all_preds, average="binary", zero_division=0
+                all_labels, all_preds, average="weighted", zero_division=0
             )
         else:
             epoch_f1 = 0.0
@@ -590,7 +583,7 @@ def evaluate_model(
             outputs = outputs.squeeze()
             loss = criterion(outputs, batch_Y)
             test_loss += loss.item() * batch_X.size(0)
-            preds = (torch.sigmoid(outputs) > 0.5).float()
+            preds = (outputs > 0.5).float()
             test_correct += (preds == batch_Y).sum().item()
             all_preds.extend(preds.cpu().numpy())
             all_labels.extend(batch_Y.cpu().numpy())
@@ -625,7 +618,6 @@ def load_model(model: nn.Module, path: str, device: torch.device) -> nn.Module:
         nn.Module: 로드된 모델.
     """
     model.load_state_dict(torch.load(path, map_location=device))
-    model.to(device)
     return model
 
 
@@ -660,8 +652,8 @@ if APPLY_HYPERPARAMETER_TUNING:
             float: 검증 손실 값
         """
         # 하이퍼파라미터 범위 설정
-        learning_rate = trial.suggest_float("learning_rate", 1e-5, 1e-3, log=True)
-        dropout_rate = trial.suggest_float("dropout_rate", 0.3, 0.7)
+        learning_rate = trial.suggest_loguniform("learning_rate", 1e-5, 1e-3)
+        dropout_rate = trial.suggest_uniform("dropout_rate", 0.3, 0.7)
         num_epochs = trial.suggest_int("num_epochs", 10, 30)
 
         # 모델 정의
@@ -670,20 +662,7 @@ if APPLY_HYPERPARAMETER_TUNING:
 
         # 옵티마이저와 손실 함수 설정
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-        criterion = nn.BCEWithLogitsLoss()
-
-        # 클래스 가중치 계산 (불균형 데이터 처리)
-        classes = np.unique(Y_train_binary)
-        if len(classes) > 1:
-            class_weights = compute_class_weight(
-                class_weight="balanced", classes=classes, y=Y_train_binary
-            )
-            pos_weight = class_weights[1] / class_weights[0]
-            pos_weight_tensor = torch.tensor(pos_weight, dtype=torch.float32).to(device)
-            criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight_tensor)
-        else:
-            # 클래스가 하나인 경우 pos_weight 설정 불필요
-            criterion = nn.BCEWithLogitsLoss()
+        criterion = nn.BCELoss()
 
         # 데이터셋 및 데이터로더 생성
         train_dataset = MFCCDataset(X_train, Y_train_binary, augment=True)
@@ -775,14 +754,13 @@ if __name__ == "__main__":
             class_weights = compute_class_weight(
                 class_weight="balanced", classes=classes, y=Y_train_binary
             )
-            pos_weight = class_weights[1] / class_weights[0]
-            pos_weight_tensor = torch.tensor(pos_weight, dtype=torch.float32).to(device)
-            criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight_tensor)
-            print(f"pos_weight 적용 완료: {pos_weight}")
+            class_weight_dict = {
+                cls: weight for cls, weight in zip(classes, class_weights)
+            }
+            print(f"클래스 가중치 계산 완료: {class_weight_dict}")
         else:
-            pos_weight_tensor = None
-            criterion = nn.BCEWithLogitsLoss()
-            print("클래스가 하나이므로 pos_weight를 적용하지 않습니다.")
+            class_weight_dict = None
+            print("클래스가 하나이므로 클래스 가중치를 적용하지 않습니다.")
 
         # 하이퍼파라미터 튜닝 적용 여부에 따른 처리
         if APPLY_HYPERPARAMETER_TUNING:
@@ -795,7 +773,7 @@ if __name__ == "__main__":
                     Y_train_binary,
                     X_val,
                     Y_val_binary,
-                    input_shape=(1, n_mfcc, max_len),
+                    input_shape=(1, max_len, n_mfcc),
                     device=device,
                     sanitized_instrument=sanitized_instrument,
                 ),
@@ -817,12 +795,13 @@ if __name__ == "__main__":
             num_epochs = EPOCHS
 
         # 모델 구축
-        input_shape = (1, n_mfcc, max_len)
+        input_shape = (1, max_len, n_mfcc)
         num_classes = 1
         model = CNNModel(input_shape, num_classes, dropout_rate=dropout_rate).to(device)
 
-        # 옵티마이저 설정
+        # 옵티마이저와 손실 함수 설정
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+        criterion = nn.BCELoss()
 
         # 데이터셋 및 데이터로더 생성
         train_dataset = MFCCDataset(X_train, Y_train_binary, augment=True)
@@ -937,7 +916,7 @@ if __name__ == "__main__":
                 batch_X = batch_X.to(device)
                 outputs = model(batch_X)
                 outputs = outputs.squeeze()
-                preds = (torch.sigmoid(outputs) > 0.5).float()
+                preds = (outputs > 0.5).float()
                 all_preds.extend(preds.cpu().numpy())
             predictions[instrument] = np.array(all_preds)
         # 메모리 정리
