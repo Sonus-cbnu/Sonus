@@ -1,0 +1,18 @@
+# ._로 시작하는 모든 파일 무시
+._*
+
+# 특정 폴더 무시 (예시)
+chord_output/
+data/
+kt_dir/
+_etc/
+cache/
+
+# 모든 .log 파일 무시
+# *.log
+
+# 모든 .tmp 파일 무시
+*.tmp
+
+# .DS_Store 파일 무시 (Mac OS)
+.DS_Store
