@@ -1,0 +1,1583 @@
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+사용 중인 디바이스: cuda
+
+메타데이터 로드 중...
+메타데이터 로드 완료: 231980 샘플
+전처리된 데이터 파일이 존재합니다. 로드합니다.
+전처리된 데이터 로드 중...
+전처리된 데이터 로드 완료: X shape=(231980, 40, 174), Y shape=(231980,)
+레이블 인코딩 중...
+레이블 인코딩 완료: 16 종류의 악기
+데이터셋 분할 중...
+데이터셋 분할 완료:
+ - 훈련 세트: 185584 샘플
+ - 검증 세트: 23198 샘플
+ - 테스트 세트: 23198 샘플
+개별 악기별 모델 구축 및 학습 시작...
+
+=== 악기: bass clarinet (1/16) ===
+클래스 가중치 계산 완료: {0: 1.06716349250161, 1: 0.9407900072998621}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.4838, Train Acc: 0.7727, Val Loss: 0.4315, Val Acc: 0.8046, Val Precision: 0.8094, Val Recall: 0.8046, Val F1-Score: 0.8045
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.4315 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4150, Train Acc: 0.8108, Val Loss: 0.3802, Val Acc: 0.8234, Val Precision: 0.8377, Val Recall: 0.8234, Val F1-Score: 0.8203
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3802 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.3916, Train Acc: 0.8225, Val Loss: 0.3527, Val Acc: 0.8426, Val Precision: 0.8428, Val Recall: 0.8426, Val F1-Score: 0.8423
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3527 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.3784, Train Acc: 0.8299, Val Loss: 0.3519, Val Acc: 0.8443, Val Precision: 0.8454, Val Recall: 0.8443, Val F1-Score: 0.8444
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3519 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.3673, Train Acc: 0.8355, Val Loss: 0.3548, Val Acc: 0.8404, Val Precision: 0.8438, Val Recall: 0.8404, Val F1-Score: 0.8404
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [6/20] 완료 - Train Loss: 0.3572, Train Acc: 0.8406, Val Loss: 0.3290, Val Acc: 0.8533, Val Precision: 0.8534, Val Recall: 0.8533, Val F1-Score: 0.8532
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3290 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.3493, Train Acc: 0.8447, Val Loss: 0.3335, Val Acc: 0.8516, Val Precision: 0.8515, Val Recall: 0.8516, Val F1-Score: 0.8516
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [8/20] 완료 - Train Loss: 0.3427, Train Acc: 0.8475, Val Loss: 0.3270, Val Acc: 0.8518, Val Precision: 0.8548, Val Recall: 0.8518, Val F1-Score: 0.8510
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3270 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.3345, Train Acc: 0.8529, Val Loss: 0.3286, Val Acc: 0.8527, Val Precision: 0.8530, Val Recall: 0.8527, Val F1-Score: 0.8528
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [10/20] 완료 - Train Loss: 0.3286, Train Acc: 0.8543, Val Loss: 0.3358, Val Acc: 0.8487, Val Precision: 0.8550, Val Recall: 0.8487, Val F1-Score: 0.8473
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [11/20] 완료 - Train Loss: 0.3199, Train Acc: 0.8590, Val Loss: 0.3181, Val Acc: 0.8566, Val Precision: 0.8566, Val Recall: 0.8566, Val F1-Score: 0.8566
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3181 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.3144, Train Acc: 0.8609, Val Loss: 0.3188, Val Acc: 0.8579, Val Precision: 0.8582, Val Recall: 0.8579, Val F1-Score: 0.8576
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.3090, Train Acc: 0.8642, Val Loss: 0.3178, Val Acc: 0.8582, Val Precision: 0.8587, Val Recall: 0.8582, Val F1-Score: 0.8580
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3178 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.3019, Train Acc: 0.8676, Val Loss: 0.3172, Val Acc: 0.8605, Val Precision: 0.8610, Val Recall: 0.8605, Val F1-Score: 0.8603
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bass_clarinet.pt
+--> 최고 검증 손실 기록: 0.3172 저장됨.
+
+Epoch [15/20] 완료 - Train Loss: 0.2962, Train Acc: 0.8709, Val Loss: 0.3191, Val Acc: 0.8578, Val Precision: 0.8596, Val Recall: 0.8578, Val F1-Score: 0.8572
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [16/20] 완료 - Train Loss: 0.2905, Train Acc: 0.8738, Val Loss: 0.3207, Val Acc: 0.8577, Val Precision: 0.8580, Val Recall: 0.8577, Val F1-Score: 0.8578
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [17/20] 완료 - Train Loss: 0.2833, Train Acc: 0.8778, Val Loss: 0.3273, Val Acc: 0.8551, Val Precision: 0.8576, Val Recall: 0.8551, Val F1-Score: 0.8544
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [18/20] 완료 - Train Loss: 0.2768, Train Acc: 0.8809, Val Loss: 0.3210, Val Acc: 0.8564, Val Precision: 0.8564, Val Recall: 0.8564, Val F1-Score: 0.8564
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [19/20] 완료 - Train Loss: 0.2701, Train Acc: 0.8840, Val Loss: 0.3199, Val Acc: 0.8600, Val Precision: 0.8603, Val Recall: 0.8600, Val F1-Score: 0.8598
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.2539, Train Acc: 0.8924, Val Loss: 0.3294, Val Acc: 0.8615, Val Precision: 0.8619, Val Recall: 0.8615, Val F1-Score: 0.8612
+--> EarlyStopping 트리거 횟수: 6/10
+
+모델 학습 완료. 최고 검증 손실: 0.3172
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.32348744739118407
+테스트 정확도: 0.8559358565393569
+F1-score: 0.8675176405296123
+                   precision    recall  f1-score   support
+
+Not bass clarinet       0.86      0.83      0.84     10802
+    bass clarinet       0.85      0.88      0.87     12396
+
+         accuracy                           0.86     23198
+        macro avg       0.86      0.85      0.85     23198
+     weighted avg       0.86      0.86      0.86     23198
+
+모델 저장 완료: best_model_bass_clarinet.pt
+
+=== 악기: bassoon (2/16) ===
+클래스 가중치 계산 완료: {0: 1.0674826864229345, 1: 0.9405420746416915}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.4055, Train Acc: 0.8194, Val Loss: 0.3346, Val Acc: 0.8529, Val Precision: 0.8540, Val Recall: 0.8529, Val F1-Score: 0.8523
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.3346 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.3412, Train Acc: 0.8515, Val Loss: 0.3045, Val Acc: 0.8657, Val Precision: 0.8658, Val Recall: 0.8657, Val F1-Score: 0.8655
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.3045 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.3209, Train Acc: 0.8605, Val Loss: 0.3022, Val Acc: 0.8654, Val Precision: 0.8675, Val Recall: 0.8654, Val F1-Score: 0.8655
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.3022 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.3105, Train Acc: 0.8657, Val Loss: 0.2884, Val Acc: 0.8730, Val Precision: 0.8750, Val Recall: 0.8730, Val F1-Score: 0.8732
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2884 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.3011, Train Acc: 0.8703, Val Loss: 0.2845, Val Acc: 0.8763, Val Precision: 0.8769, Val Recall: 0.8763, Val F1-Score: 0.8764
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2845 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.2920, Train Acc: 0.8734, Val Loss: 0.2797, Val Acc: 0.8793, Val Precision: 0.8795, Val Recall: 0.8793, Val F1-Score: 0.8794
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2797 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.2845, Train Acc: 0.8781, Val Loss: 0.2801, Val Acc: 0.8772, Val Precision: 0.8782, Val Recall: 0.8772, Val F1-Score: 0.8768
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [8/20] 완료 - Train Loss: 0.2788, Train Acc: 0.8807, Val Loss: 0.2789, Val Acc: 0.8801, Val Precision: 0.8803, Val Recall: 0.8801, Val F1-Score: 0.8799
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2789 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.2720, Train Acc: 0.8833, Val Loss: 0.2743, Val Acc: 0.8806, Val Precision: 0.8825, Val Recall: 0.8806, Val F1-Score: 0.8807
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2743 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.2646, Train Acc: 0.8873, Val Loss: 0.2709, Val Acc: 0.8798, Val Precision: 0.8805, Val Recall: 0.8798, Val F1-Score: 0.8799
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2709 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.2570, Train Acc: 0.8903, Val Loss: 0.2674, Val Acc: 0.8835, Val Precision: 0.8840, Val Recall: 0.8835, Val F1-Score: 0.8836
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_bassoon.pt
+--> 최고 검증 손실 기록: 0.2674 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.2520, Train Acc: 0.8932, Val Loss: 0.2880, Val Acc: 0.8759, Val Precision: 0.8818, Val Recall: 0.8759, Val F1-Score: 0.8760
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.2440, Train Acc: 0.8974, Val Loss: 0.2882, Val Acc: 0.8754, Val Precision: 0.8776, Val Recall: 0.8754, Val F1-Score: 0.8747
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [14/20] 완료 - Train Loss: 0.2381, Train Acc: 0.8997, Val Loss: 0.2789, Val Acc: 0.8824, Val Precision: 0.8832, Val Recall: 0.8824, Val F1-Score: 0.8820
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [15/20] 완료 - Train Loss: 0.2320, Train Acc: 0.9027, Val Loss: 0.2738, Val Acc: 0.8834, Val Precision: 0.8834, Val Recall: 0.8834, Val F1-Score: 0.8834
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [16/20] 완료 - Train Loss: 0.2269, Train Acc: 0.9060, Val Loss: 0.2778, Val Acc: 0.8846, Val Precision: 0.8846, Val Recall: 0.8846, Val F1-Score: 0.8846
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [17/20] 완료 - Train Loss: 0.2090, Train Acc: 0.9138, Val Loss: 0.2803, Val Acc: 0.8829, Val Precision: 0.8829, Val Recall: 0.8829, Val F1-Score: 0.8828
+--> EarlyStopping 트리거 횟수: 6/10
+
+Epoch [18/20] 완료 - Train Loss: 0.2044, Train Acc: 0.9157, Val Loss: 0.2796, Val Acc: 0.8843, Val Precision: 0.8842, Val Recall: 0.8843, Val F1-Score: 0.8842
+--> EarlyStopping 트리거 횟수: 7/10
+
+Epoch [19/20] 완료 - Train Loss: 0.1980, Train Acc: 0.9190, Val Loss: 0.2825, Val Acc: 0.8832, Val Precision: 0.8833, Val Recall: 0.8832, Val F1-Score: 0.8832
+--> EarlyStopping 트리거 횟수: 8/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.1945, Train Acc: 0.9206, Val Loss: 0.2847, Val Acc: 0.8835, Val Precision: 0.8836, Val Recall: 0.8835, Val F1-Score: 0.8835
+--> EarlyStopping 트리거 횟수: 9/10
+
+모델 학습 완료. 최고 검증 손실: 0.2674
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.26291167162823176
+테스트 정확도: 0.8871454435727217
+F1-score: 0.8939565780946209
+              precision    recall  f1-score   support
+
+ Not bassoon       0.87      0.89      0.88     10727
+     bassoon       0.90      0.88      0.89     12471
+
+    accuracy                           0.89     23198
+   macro avg       0.89      0.89      0.89     23198
+weighted avg       0.89      0.89      0.89     23198
+
+모델 저장 완료: best_model_bassoon.pt
+
+=== 악기: cello (3/16) ===
+클래스 가중치 계산 완료: {0: 1.070536929786105, 1: 0.9381837300062685}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5355, Train Acc: 0.7401, Val Loss: 0.4883, Val Acc: 0.7633, Val Precision: 0.7685, Val Recall: 0.7633, Val F1-Score: 0.7605
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4883 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.5006, Train Acc: 0.7610, Val Loss: 0.4695, Val Acc: 0.7736, Val Precision: 0.7737, Val Recall: 0.7736, Val F1-Score: 0.7732
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4695 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4861, Train Acc: 0.7696, Val Loss: 0.4692, Val Acc: 0.7771, Val Precision: 0.7773, Val Recall: 0.7771, Val F1-Score: 0.7772
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4692 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4773, Train Acc: 0.7747, Val Loss: 0.4638, Val Acc: 0.7789, Val Precision: 0.7827, Val Recall: 0.7789, Val F1-Score: 0.7770
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4638 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.4709, Train Acc: 0.7783, Val Loss: 0.4597, Val Acc: 0.7782, Val Precision: 0.7802, Val Recall: 0.7782, Val F1-Score: 0.7784
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4597 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.4656, Train Acc: 0.7811, Val Loss: 0.4508, Val Acc: 0.7848, Val Precision: 0.7847, Val Recall: 0.7848, Val F1-Score: 0.7844
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4508 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.4596, Train Acc: 0.7841, Val Loss: 0.4437, Val Acc: 0.7882, Val Precision: 0.7888, Val Recall: 0.7882, Val F1-Score: 0.7875
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4437 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.4543, Train Acc: 0.7872, Val Loss: 0.4532, Val Acc: 0.7854, Val Precision: 0.7895, Val Recall: 0.7854, Val F1-Score: 0.7834
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [9/20] 완료 - Train Loss: 0.4491, Train Acc: 0.7902, Val Loss: 0.4382, Val Acc: 0.7921, Val Precision: 0.7923, Val Recall: 0.7921, Val F1-Score: 0.7917
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4382 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.4436, Train Acc: 0.7939, Val Loss: 0.4430, Val Acc: 0.7928, Val Precision: 0.7927, Val Recall: 0.7928, Val F1-Score: 0.7927
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.4379, Train Acc: 0.7977, Val Loss: 0.4379, Val Acc: 0.7929, Val Precision: 0.7937, Val Recall: 0.7929, Val F1-Score: 0.7921
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4379 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.4341, Train Acc: 0.8002, Val Loss: 0.4365, Val Acc: 0.7930, Val Precision: 0.7948, Val Recall: 0.7930, Val F1-Score: 0.7919
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4365 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.4272, Train Acc: 0.8047, Val Loss: 0.4339, Val Acc: 0.7970, Val Precision: 0.7989, Val Recall: 0.7970, Val F1-Score: 0.7959
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_cello.pt
+--> 최고 검증 손실 기록: 0.4339 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.4221, Train Acc: 0.8069, Val Loss: 0.4429, Val Acc: 0.7933, Val Precision: 0.7961, Val Recall: 0.7933, Val F1-Score: 0.7919
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.4151, Train Acc: 0.8111, Val Loss: 0.4437, Val Acc: 0.7917, Val Precision: 0.7972, Val Recall: 0.7917, Val F1-Score: 0.7894
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [16/20] 완료 - Train Loss: 0.4122, Train Acc: 0.8130, Val Loss: 0.4344, Val Acc: 0.7954, Val Precision: 0.7954, Val Recall: 0.7954, Val F1-Score: 0.7951
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [17/20] 완료 - Train Loss: 0.4035, Train Acc: 0.8175, Val Loss: 0.4367, Val Acc: 0.7921, Val Precision: 0.7927, Val Recall: 0.7921, Val F1-Score: 0.7914
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [18/20] 완료 - Train Loss: 0.3975, Train Acc: 0.8208, Val Loss: 0.4436, Val Acc: 0.7966, Val Precision: 0.8004, Val Recall: 0.7966, Val F1-Score: 0.7949
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [19/20] 완료 - Train Loss: 0.3809, Train Acc: 0.8284, Val Loss: 0.4356, Val Acc: 0.7958, Val Precision: 0.7957, Val Recall: 0.7958, Val F1-Score: 0.7955
+--> EarlyStopping 트리거 횟수: 6/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.3728, Train Acc: 0.8340, Val Loss: 0.4406, Val Acc: 0.7947, Val Precision: 0.7951, Val Recall: 0.7947, Val F1-Score: 0.7941
+--> EarlyStopping 트리거 횟수: 7/10
+
+모델 학습 완료. 최고 검증 손실: 0.4339
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.4461908535187959
+테스트 정확도: 0.7889904302095008
+F1-score: 0.8124305475725179
+              precision    recall  f1-score   support
+
+   Not cello       0.81      0.71      0.76     10807
+       cello       0.77      0.86      0.81     12391
+
+    accuracy                           0.79     23198
+   macro avg       0.79      0.78      0.79     23198
+weighted avg       0.79      0.79      0.79     23198
+
+모델 저장 완료: best_model_cello.pt
+
+=== 악기: clarinet (4/16) ===
+클래스 가중치 계산 완료: {0: 1.0671266747168076, 1: 0.9408186233257967}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5129, Train Acc: 0.7558, Val Loss: 0.4436, Val Acc: 0.7898, Val Precision: 0.8007, Val Recall: 0.7898, Val F1-Score: 0.7859
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.4436 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4459, Train Acc: 0.7953, Val Loss: 0.4066, Val Acc: 0.8111, Val Precision: 0.8126, Val Recall: 0.8111, Val F1-Score: 0.8112
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.4066 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4195, Train Acc: 0.8094, Val Loss: 0.3830, Val Acc: 0.8240, Val Precision: 0.8248, Val Recall: 0.8240, Val F1-Score: 0.8233
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3830 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4043, Train Acc: 0.8165, Val Loss: 0.3792, Val Acc: 0.8253, Val Precision: 0.8261, Val Recall: 0.8253, Val F1-Score: 0.8254
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3792 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.3942, Train Acc: 0.8214, Val Loss: 0.3767, Val Acc: 0.8288, Val Precision: 0.8342, Val Recall: 0.8288, Val F1-Score: 0.8271
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3767 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.3860, Train Acc: 0.8256, Val Loss: 0.3635, Val Acc: 0.8354, Val Precision: 0.8353, Val Recall: 0.8354, Val F1-Score: 0.8353
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3635 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.3786, Train Acc: 0.8300, Val Loss: 0.3610, Val Acc: 0.8354, Val Precision: 0.8355, Val Recall: 0.8354, Val F1-Score: 0.8352
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3610 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.3723, Train Acc: 0.8329, Val Loss: 0.3708, Val Acc: 0.8338, Val Precision: 0.8366, Val Recall: 0.8338, Val F1-Score: 0.8327
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [9/20] 완료 - Train Loss: 0.3645, Train Acc: 0.8375, Val Loss: 0.3619, Val Acc: 0.8367, Val Precision: 0.8376, Val Recall: 0.8367, Val F1-Score: 0.8361
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [10/20] 완료 - Train Loss: 0.3593, Train Acc: 0.8395, Val Loss: 0.3584, Val Acc: 0.8380, Val Precision: 0.8401, Val Recall: 0.8380, Val F1-Score: 0.8372
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3584 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.3539, Train Acc: 0.8431, Val Loss: 0.3531, Val Acc: 0.8404, Val Precision: 0.8407, Val Recall: 0.8404, Val F1-Score: 0.8404
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3531 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.3472, Train Acc: 0.8465, Val Loss: 0.3523, Val Acc: 0.8409, Val Precision: 0.8408, Val Recall: 0.8409, Val F1-Score: 0.8407
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3523 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.3422, Train Acc: 0.8482, Val Loss: 0.3508, Val Acc: 0.8418, Val Precision: 0.8418, Val Recall: 0.8418, Val F1-Score: 0.8418
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3508 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.3350, Train Acc: 0.8522, Val Loss: 0.3525, Val Acc: 0.8405, Val Precision: 0.8406, Val Recall: 0.8405, Val F1-Score: 0.8405
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.3298, Train Acc: 0.8551, Val Loss: 0.3601, Val Acc: 0.8408, Val Precision: 0.8431, Val Recall: 0.8408, Val F1-Score: 0.8399
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [16/20] 완료 - Train Loss: 0.3244, Train Acc: 0.8580, Val Loss: 0.3624, Val Acc: 0.8399, Val Precision: 0.8415, Val Recall: 0.8399, Val F1-Score: 0.8391
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [17/20] 완료 - Train Loss: 0.3186, Train Acc: 0.8602, Val Loss: 0.3487, Val Acc: 0.8444, Val Precision: 0.8443, Val Recall: 0.8444, Val F1-Score: 0.8443
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clarinet.pt
+--> 최고 검증 손실 기록: 0.3487 저장됨.
+
+Epoch [18/20] 완료 - Train Loss: 0.3116, Train Acc: 0.8639, Val Loss: 0.3572, Val Acc: 0.8398, Val Precision: 0.8402, Val Recall: 0.8398, Val F1-Score: 0.8399
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [19/20] 완료 - Train Loss: 0.3080, Train Acc: 0.8669, Val Loss: 0.3658, Val Acc: 0.8349, Val Precision: 0.8379, Val Recall: 0.8349, Val F1-Score: 0.8351
+--> EarlyStopping 트리거 횟수: 2/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.3024, Train Acc: 0.8688, Val Loss: 0.3594, Val Acc: 0.8412, Val Precision: 0.8413, Val Recall: 0.8412, Val F1-Score: 0.8412
+--> EarlyStopping 트리거 횟수: 3/10
+
+모델 학습 완료. 최고 검증 손실: 0.3487
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.3490832998188562
+테스트 정확도: 0.8470557806707475
+F1-score: 0.8598625483845486
+              precision    recall  f1-score   support
+
+Not clarinet       0.85      0.82      0.83     10715
+    clarinet       0.85      0.87      0.86     12483
+
+    accuracy                           0.85     23198
+   macro avg       0.85      0.84      0.85     23198
+weighted avg       0.85      0.85      0.85     23198
+
+모델 저장 완료: best_model_clarinet.pt
+
+=== 악기: clash cymbals (5/16) ===
+클래스 가중치 계산 완료: {0: 1.0629095074455899, 1: 0.9441211183915998}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.0909, Train Acc: 0.9683, Val Loss: 0.0223, Val Acc: 0.9942, Val Precision: 0.9942, Val Recall: 0.9942, Val F1-Score: 0.9942
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0223 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.0297, Train Acc: 0.9925, Val Loss: 0.0162, Val Acc: 0.9961, Val Precision: 0.9961, Val Recall: 0.9961, Val F1-Score: 0.9961
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0162 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.0234, Train Acc: 0.9943, Val Loss: 0.0124, Val Acc: 0.9974, Val Precision: 0.9974, Val Recall: 0.9974, Val F1-Score: 0.9974
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0124 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.0193, Train Acc: 0.9956, Val Loss: 0.0118, Val Acc: 0.9977, Val Precision: 0.9977, Val Recall: 0.9977, Val F1-Score: 0.9977
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0118 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.0179, Train Acc: 0.9959, Val Loss: 0.0099, Val Acc: 0.9980, Val Precision: 0.9980, Val Recall: 0.9980, Val F1-Score: 0.9980
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0099 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.0166, Train Acc: 0.9964, Val Loss: 0.0121, Val Acc: 0.9978, Val Precision: 0.9978, Val Recall: 0.9978, Val F1-Score: 0.9978
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [7/20] 완료 - Train Loss: 0.0150, Train Acc: 0.9967, Val Loss: 0.0099, Val Acc: 0.9977, Val Precision: 0.9977, Val Recall: 0.9977, Val F1-Score: 0.9977
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0099 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.0151, Train Acc: 0.9967, Val Loss: 0.0101, Val Acc: 0.9979, Val Precision: 0.9979, Val Recall: 0.9979, Val F1-Score: 0.9979
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [9/20] 완료 - Train Loss: 0.0131, Train Acc: 0.9971, Val Loss: 0.0092, Val Acc: 0.9980, Val Precision: 0.9980, Val Recall: 0.9980, Val F1-Score: 0.9980
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0092 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.0132, Train Acc: 0.9971, Val Loss: 0.0091, Val Acc: 0.9984, Val Precision: 0.9985, Val Recall: 0.9984, Val F1-Score: 0.9984
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0091 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.0126, Train Acc: 0.9974, Val Loss: 0.0088, Val Acc: 0.9984, Val Precision: 0.9985, Val Recall: 0.9984, Val F1-Score: 0.9984
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0088 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.0118, Train Acc: 0.9974, Val Loss: 0.0088, Val Acc: 0.9984, Val Precision: 0.9984, Val Recall: 0.9984, Val F1-Score: 0.9984
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.0112, Train Acc: 0.9976, Val Loss: 0.0087, Val Acc: 0.9983, Val Precision: 0.9983, Val Recall: 0.9983, Val F1-Score: 0.9983
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0087 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.0106, Train Acc: 0.9977, Val Loss: 0.0093, Val Acc: 0.9984, Val Precision: 0.9984, Val Recall: 0.9984, Val F1-Score: 0.9984
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.0105, Train Acc: 0.9977, Val Loss: 0.0087, Val Acc: 0.9984, Val Precision: 0.9984, Val Recall: 0.9984, Val F1-Score: 0.9984
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_clash_cymbals.pt
+--> 최고 검증 손실 기록: 0.0087 저장됨.
+
+Epoch [16/20] 완료 - Train Loss: 0.0098, Train Acc: 0.9977, Val Loss: 0.0098, Val Acc: 0.9983, Val Precision: 0.9983, Val Recall: 0.9983, Val F1-Score: 0.9983
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [17/20] 완료 - Train Loss: 0.0095, Train Acc: 0.9978, Val Loss: 0.0105, Val Acc: 0.9984, Val Precision: 0.9984, Val Recall: 0.9984, Val F1-Score: 0.9984
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [18/20] 완료 - Train Loss: 0.0087, Train Acc: 0.9979, Val Loss: 0.0095, Val Acc: 0.9984, Val Precision: 0.9984, Val Recall: 0.9984, Val F1-Score: 0.9984
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [19/20] 완료 - Train Loss: 0.0089, Train Acc: 0.9979, Val Loss: 0.0117, Val Acc: 0.9982, Val Precision: 0.9982, Val Recall: 0.9982, Val F1-Score: 0.9982
+--> EarlyStopping 트리거 횟수: 4/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.0087, Train Acc: 0.9980, Val Loss: 0.0107, Val Acc: 0.9984, Val Precision: 0.9984, Val Recall: 0.9984, Val F1-Score: 0.9984
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+모델 학습 완료. 최고 검증 손실: 0.0087
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.010422151337570391
+테스트 정확도: 0.9980170704371066
+F1-score: 0.9981494890980771
+                   precision    recall  f1-score   support
+
+Not clash cymbals       1.00      1.00      1.00     10750
+    clash cymbals       1.00      1.00      1.00     12448
+
+         accuracy                           1.00     23198
+        macro avg       1.00      1.00      1.00     23198
+     weighted avg       1.00      1.00      1.00     23198
+
+모델 저장 완료: best_model_clash_cymbals.pt
+
+=== 악기: double bass (6/16) ===
+클래스 가중치 계산 완료: {0: 1.067531810128621, 1: 0.9405039427540491}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.4314, Train Acc: 0.8045, Val Loss: 0.3555, Val Acc: 0.8387, Val Precision: 0.8387, Val Recall: 0.8387, Val F1-Score: 0.8387
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.3555 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.3655, Train Acc: 0.8355, Val Loss: 0.3246, Val Acc: 0.8536, Val Precision: 0.8536, Val Recall: 0.8536, Val F1-Score: 0.8534
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.3246 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.3422, Train Acc: 0.8471, Val Loss: 0.3122, Val Acc: 0.8575, Val Precision: 0.8575, Val Recall: 0.8575, Val F1-Score: 0.8575
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.3122 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.3263, Train Acc: 0.8549, Val Loss: 0.2997, Val Acc: 0.8624, Val Precision: 0.8625, Val Recall: 0.8624, Val F1-Score: 0.8623
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2997 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.3157, Train Acc: 0.8597, Val Loss: 0.2918, Val Acc: 0.8673, Val Precision: 0.8673, Val Recall: 0.8673, Val F1-Score: 0.8673
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2918 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.3074, Train Acc: 0.8640, Val Loss: 0.3020, Val Acc: 0.8636, Val Precision: 0.8668, Val Recall: 0.8636, Val F1-Score: 0.8629
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [7/20] 완료 - Train Loss: 0.3007, Train Acc: 0.8670, Val Loss: 0.2876, Val Acc: 0.8693, Val Precision: 0.8704, Val Recall: 0.8693, Val F1-Score: 0.8689
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2876 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.2931, Train Acc: 0.8700, Val Loss: 0.2857, Val Acc: 0.8684, Val Precision: 0.8700, Val Recall: 0.8684, Val F1-Score: 0.8685
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2857 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.2875, Train Acc: 0.8735, Val Loss: 0.2827, Val Acc: 0.8730, Val Precision: 0.8733, Val Recall: 0.8730, Val F1-Score: 0.8731
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2827 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.2813, Train Acc: 0.8758, Val Loss: 0.2835, Val Acc: 0.8734, Val Precision: 0.8748, Val Recall: 0.8734, Val F1-Score: 0.8730
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.2758, Train Acc: 0.8790, Val Loss: 0.2793, Val Acc: 0.8737, Val Precision: 0.8737, Val Recall: 0.8737, Val F1-Score: 0.8737
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2793 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.2709, Train Acc: 0.8818, Val Loss: 0.2767, Val Acc: 0.8749, Val Precision: 0.8751, Val Recall: 0.8749, Val F1-Score: 0.8747
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2767 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.2648, Train Acc: 0.8837, Val Loss: 0.2792, Val Acc: 0.8728, Val Precision: 0.8728, Val Recall: 0.8728, Val F1-Score: 0.8728
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [14/20] 완료 - Train Loss: 0.2608, Train Acc: 0.8861, Val Loss: 0.2873, Val Acc: 0.8723, Val Precision: 0.8748, Val Recall: 0.8723, Val F1-Score: 0.8717
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [15/20] 완료 - Train Loss: 0.2567, Train Acc: 0.8889, Val Loss: 0.2928, Val Acc: 0.8705, Val Precision: 0.8731, Val Recall: 0.8705, Val F1-Score: 0.8700
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [16/20] 완료 - Train Loss: 0.2512, Train Acc: 0.8911, Val Loss: 0.2791, Val Acc: 0.8746, Val Precision: 0.8748, Val Recall: 0.8746, Val F1-Score: 0.8746
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [17/20] 완료 - Train Loss: 0.2456, Train Acc: 0.8947, Val Loss: 0.2742, Val Acc: 0.8774, Val Precision: 0.8774, Val Recall: 0.8774, Val F1-Score: 0.8773
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_double_bass.pt
+--> 최고 검증 손실 기록: 0.2742 저장됨.
+
+Epoch [18/20] 완료 - Train Loss: 0.2414, Train Acc: 0.8960, Val Loss: 0.2838, Val Acc: 0.8712, Val Precision: 0.8726, Val Recall: 0.8712, Val F1-Score: 0.8713
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [19/20] 완료 - Train Loss: 0.2367, Train Acc: 0.8981, Val Loss: 0.2802, Val Acc: 0.8765, Val Precision: 0.8765, Val Recall: 0.8765, Val F1-Score: 0.8765
+--> EarlyStopping 트리거 횟수: 2/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.2320, Train Acc: 0.9005, Val Loss: 0.2786, Val Acc: 0.8749, Val Precision: 0.8756, Val Recall: 0.8749, Val F1-Score: 0.8750
+--> EarlyStopping 트리거 횟수: 3/10
+
+모델 학습 완료. 최고 검증 손실: 0.2742
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.26942563084309773
+테스트 정확도: 0.8783946891973446
+F1-score: 0.8877571320574543
+                 precision    recall  f1-score   support
+
+Not double bass       0.87      0.86      0.87     10664
+    double bass       0.89      0.89      0.89     12534
+
+       accuracy                           0.88     23198
+      macro avg       0.88      0.88      0.88     23198
+   weighted avg       0.88      0.88      0.88     23198
+
+모델 저장 완료: best_model_double_bass.pt
+
+=== 악기: flute (7/16) ===
+클래스 가중치 계산 완료: {0: 1.065117827339616, 1: 0.9423856192555731}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5668, Train Acc: 0.7163, Val Loss: 0.5391, Val Acc: 0.7293, Val Precision: 0.7373, Val Recall: 0.7293, Val F1-Score: 0.7242
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.5391 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.5405, Train Acc: 0.7315, Val Loss: 0.5126, Val Acc: 0.7457, Val Precision: 0.7456, Val Recall: 0.7457, Val F1-Score: 0.7451
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.5126 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.5256, Train Acc: 0.7411, Val Loss: 0.5019, Val Acc: 0.7505, Val Precision: 0.7546, Val Recall: 0.7505, Val F1-Score: 0.7477
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.5019 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.5165, Train Acc: 0.7489, Val Loss: 0.5297, Val Acc: 0.7429, Val Precision: 0.7458, Val Recall: 0.7429, Val F1-Score: 0.7431
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [5/20] 완료 - Train Loss: 0.5102, Train Acc: 0.7514, Val Loss: 0.4972, Val Acc: 0.7564, Val Precision: 0.7610, Val Recall: 0.7564, Val F1-Score: 0.7536
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.4972 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.5039, Train Acc: 0.7550, Val Loss: 0.4859, Val Acc: 0.7606, Val Precision: 0.7630, Val Recall: 0.7606, Val F1-Score: 0.7588
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.4859 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.4971, Train Acc: 0.7598, Val Loss: 0.4844, Val Acc: 0.7624, Val Precision: 0.7626, Val Recall: 0.7624, Val F1-Score: 0.7617
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.4844 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.4906, Train Acc: 0.7641, Val Loss: 0.4860, Val Acc: 0.7611, Val Precision: 0.7609, Val Recall: 0.7611, Val F1-Score: 0.7608
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [9/20] 완료 - Train Loss: 0.4857, Train Acc: 0.7670, Val Loss: 0.5020, Val Acc: 0.7507, Val Precision: 0.7684, Val Recall: 0.7507, Val F1-Score: 0.7433
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [10/20] 완료 - Train Loss: 0.4804, Train Acc: 0.7694, Val Loss: 0.4780, Val Acc: 0.7656, Val Precision: 0.7662, Val Recall: 0.7656, Val F1-Score: 0.7646
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_flute.pt
+--> 최고 검증 손실 기록: 0.4780 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.4744, Train Acc: 0.7736, Val Loss: 0.4782, Val Acc: 0.7670, Val Precision: 0.7676, Val Recall: 0.7670, Val F1-Score: 0.7662
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [12/20] 완료 - Train Loss: 0.4686, Train Acc: 0.7772, Val Loss: 0.4786, Val Acc: 0.7668, Val Precision: 0.7673, Val Recall: 0.7668, Val F1-Score: 0.7659
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [13/20] 완료 - Train Loss: 0.4607, Train Acc: 0.7815, Val Loss: 0.4856, Val Acc: 0.7617, Val Precision: 0.7615, Val Recall: 0.7617, Val F1-Score: 0.7614
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [14/20] 완료 - Train Loss: 0.4549, Train Acc: 0.7854, Val Loss: 0.4801, Val Acc: 0.7692, Val Precision: 0.7703, Val Recall: 0.7692, Val F1-Score: 0.7681
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [15/20] 완료 - Train Loss: 0.4483, Train Acc: 0.7887, Val Loss: 0.4846, Val Acc: 0.7614, Val Precision: 0.7615, Val Recall: 0.7614, Val F1-Score: 0.7614
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [16/20] 완료 - Train Loss: 0.4322, Train Acc: 0.7993, Val Loss: 0.4838, Val Acc: 0.7686, Val Precision: 0.7701, Val Recall: 0.7686, Val F1-Score: 0.7672
+--> EarlyStopping 트리거 횟수: 6/10
+
+Epoch [17/20] 완료 - Train Loss: 0.4251, Train Acc: 0.8048, Val Loss: 0.4856, Val Acc: 0.7674, Val Precision: 0.7672, Val Recall: 0.7674, Val F1-Score: 0.7671
+--> EarlyStopping 트리거 횟수: 7/10
+
+Epoch [18/20] 완료 - Train Loss: 0.4192, Train Acc: 0.8070, Val Loss: 0.4845, Val Acc: 0.7659, Val Precision: 0.7662, Val Recall: 0.7659, Val F1-Score: 0.7652
+--> EarlyStopping 트리거 횟수: 8/10
+
+Epoch [19/20] 완료 - Train Loss: 0.4114, Train Acc: 0.8112, Val Loss: 0.4897, Val Acc: 0.7645, Val Precision: 0.7645, Val Recall: 0.7645, Val F1-Score: 0.7645
+--> EarlyStopping 트리거 횟수: 9/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.4070, Train Acc: 0.8136, Val Loss: 0.4984, Val Acc: 0.7640, Val Precision: 0.7640, Val Recall: 0.7640, Val F1-Score: 0.7635
+--> EarlyStopping 트리거 횟수: 10/10
+
+Early stopping 발생. 학습 중단.
+
+모델 학습 완료. 최고 검증 손실: 0.4780
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.48039539581393875
+테스트 정확도: 0.7669626691956203
+F1-score: 0.7910966844423835
+              precision    recall  f1-score   support
+
+   Not flute       0.78      0.70      0.74     10786
+       flute       0.76      0.82      0.79     12412
+
+    accuracy                           0.77     23198
+   macro avg       0.77      0.76      0.76     23198
+weighted avg       0.77      0.77      0.77     23198
+
+모델 저장 완료: best_model_flute.pt
+
+=== 악기: french horn (8/16) ===
+클래스 가중치 계산 완료: {0: 1.0665747126436782, 1: 0.9412480727095675}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5333, Train Acc: 0.7393, Val Loss: 0.4839, Val Acc: 0.7671, Val Precision: 0.7738, Val Recall: 0.7671, Val F1-Score: 0.7636
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4839 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4943, Train Acc: 0.7647, Val Loss: 0.4632, Val Acc: 0.7792, Val Precision: 0.7803, Val Recall: 0.7792, Val F1-Score: 0.7779
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4632 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4820, Train Acc: 0.7733, Val Loss: 0.4553, Val Acc: 0.7842, Val Precision: 0.7864, Val Recall: 0.7842, Val F1-Score: 0.7826
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4553 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4715, Train Acc: 0.7786, Val Loss: 0.4655, Val Acc: 0.7797, Val Precision: 0.7930, Val Recall: 0.7797, Val F1-Score: 0.7748
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [5/20] 완료 - Train Loss: 0.4649, Train Acc: 0.7835, Val Loss: 0.4441, Val Acc: 0.7933, Val Precision: 0.7960, Val Recall: 0.7933, Val F1-Score: 0.7916
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4441 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.4553, Train Acc: 0.7898, Val Loss: 0.4391, Val Acc: 0.7958, Val Precision: 0.7968, Val Recall: 0.7958, Val F1-Score: 0.7948
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4391 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.4487, Train Acc: 0.7929, Val Loss: 0.4440, Val Acc: 0.7936, Val Precision: 0.8002, Val Recall: 0.7936, Val F1-Score: 0.7909
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [8/20] 완료 - Train Loss: 0.4423, Train Acc: 0.7962, Val Loss: 0.4359, Val Acc: 0.7942, Val Precision: 0.7941, Val Recall: 0.7942, Val F1-Score: 0.7941
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4359 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.4378, Train Acc: 0.7995, Val Loss: 0.4309, Val Acc: 0.7987, Val Precision: 0.7989, Val Recall: 0.7987, Val F1-Score: 0.7982
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4309 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.4296, Train Acc: 0.8040, Val Loss: 0.4336, Val Acc: 0.7943, Val Precision: 0.7944, Val Recall: 0.7943, Val F1-Score: 0.7943
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.4262, Train Acc: 0.8062, Val Loss: 0.4273, Val Acc: 0.8023, Val Precision: 0.8056, Val Recall: 0.8023, Val F1-Score: 0.8006
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4273 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.4183, Train Acc: 0.8110, Val Loss: 0.4263, Val Acc: 0.8009, Val Precision: 0.8008, Val Recall: 0.8009, Val F1-Score: 0.8006
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4263 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.4120, Train Acc: 0.8132, Val Loss: 0.4233, Val Acc: 0.8009, Val Precision: 0.8008, Val Recall: 0.8009, Val F1-Score: 0.8006
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_french_horn.pt
+--> 최고 검증 손실 기록: 0.4233 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.4064, Train Acc: 0.8163, Val Loss: 0.4237, Val Acc: 0.8017, Val Precision: 0.8028, Val Recall: 0.8017, Val F1-Score: 0.8007
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.3996, Train Acc: 0.8216, Val Loss: 0.4328, Val Acc: 0.8002, Val Precision: 0.8001, Val Recall: 0.8002, Val F1-Score: 0.8000
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [16/20] 완료 - Train Loss: 0.3939, Train Acc: 0.8241, Val Loss: 0.4249, Val Acc: 0.8011, Val Precision: 0.8020, Val Recall: 0.8011, Val F1-Score: 0.8002
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [17/20] 완료 - Train Loss: 0.3872, Train Acc: 0.8283, Val Loss: 0.4376, Val Acc: 0.7996, Val Precision: 0.8023, Val Recall: 0.7996, Val F1-Score: 0.7980
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [18/20] 완료 - Train Loss: 0.3803, Train Acc: 0.8310, Val Loss: 0.4310, Val Acc: 0.8013, Val Precision: 0.8018, Val Recall: 0.8013, Val F1-Score: 0.8006
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [19/20] 완료 - Train Loss: 0.3630, Train Acc: 0.8416, Val Loss: 0.4344, Val Acc: 0.7968, Val Precision: 0.7968, Val Recall: 0.7968, Val F1-Score: 0.7968
+--> EarlyStopping 트리거 횟수: 6/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.3573, Train Acc: 0.8439, Val Loss: 0.4352, Val Acc: 0.8011, Val Precision: 0.8017, Val Recall: 0.8011, Val F1-Score: 0.8003
+--> EarlyStopping 트리거 횟수: 7/10
+
+모델 학습 완료. 최고 검증 손실: 0.4233
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.42674240795987795
+테스트 정확도: 0.8009311147512717
+F1-score: 0.8192563600782778
+                 precision    recall  f1-score   support
+
+Not french horn       0.79      0.76      0.78     10631
+    french horn       0.81      0.83      0.82     12567
+
+       accuracy                           0.80     23198
+      macro avg       0.80      0.80      0.80     23198
+   weighted avg       0.80      0.80      0.80     23198
+
+모델 저장 완료: best_model_french_horn.pt
+
+=== 악기: oboe (9/16) ===
+클래스 가중치 계산 완료: {0: 1.066770900395475, 1: 0.9410953346855984}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5035, Train Acc: 0.7600, Val Loss: 0.4347, Val Acc: 0.7986, Val Precision: 0.8001, Val Recall: 0.7986, Val F1-Score: 0.7977
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.4347 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4484, Train Acc: 0.7929, Val Loss: 0.4068, Val Acc: 0.8117, Val Precision: 0.8119, Val Recall: 0.8117, Val F1-Score: 0.8118
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.4068 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4258, Train Acc: 0.8044, Val Loss: 0.3955, Val Acc: 0.8212, Val Precision: 0.8211, Val Recall: 0.8212, Val F1-Score: 0.8211
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3955 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4127, Train Acc: 0.8130, Val Loss: 0.3832, Val Acc: 0.8251, Val Precision: 0.8271, Val Recall: 0.8251, Val F1-Score: 0.8243
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3832 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.4016, Train Acc: 0.8193, Val Loss: 0.3761, Val Acc: 0.8298, Val Precision: 0.8297, Val Recall: 0.8298, Val F1-Score: 0.8297
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3761 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.3914, Train Acc: 0.8239, Val Loss: 0.3758, Val Acc: 0.8308, Val Precision: 0.8318, Val Recall: 0.8308, Val F1-Score: 0.8309
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3758 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.3842, Train Acc: 0.8273, Val Loss: 0.3673, Val Acc: 0.8340, Val Precision: 0.8342, Val Recall: 0.8340, Val F1-Score: 0.8338
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3673 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.3746, Train Acc: 0.8321, Val Loss: 0.3641, Val Acc: 0.8363, Val Precision: 0.8363, Val Recall: 0.8363, Val F1-Score: 0.8362
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3641 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.3686, Train Acc: 0.8355, Val Loss: 0.3605, Val Acc: 0.8365, Val Precision: 0.8365, Val Recall: 0.8365, Val F1-Score: 0.8365
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3605 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.3599, Train Acc: 0.8390, Val Loss: 0.3731, Val Acc: 0.8275, Val Precision: 0.8315, Val Recall: 0.8275, Val F1-Score: 0.8276
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.3536, Train Acc: 0.8421, Val Loss: 0.3575, Val Acc: 0.8391, Val Precision: 0.8392, Val Recall: 0.8391, Val F1-Score: 0.8389
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3575 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.3473, Train Acc: 0.8462, Val Loss: 0.3601, Val Acc: 0.8383, Val Precision: 0.8384, Val Recall: 0.8383, Val F1-Score: 0.8381
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.3415, Train Acc: 0.8498, Val Loss: 0.3586, Val Acc: 0.8382, Val Precision: 0.8384, Val Recall: 0.8382, Val F1-Score: 0.8382
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [14/20] 완료 - Train Loss: 0.3340, Train Acc: 0.8530, Val Loss: 0.3564, Val Acc: 0.8388, Val Precision: 0.8394, Val Recall: 0.8388, Val F1-Score: 0.8389
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3564 저장됨.
+
+Epoch [15/20] 완료 - Train Loss: 0.3277, Train Acc: 0.8571, Val Loss: 0.3572, Val Acc: 0.8397, Val Precision: 0.8404, Val Recall: 0.8397, Val F1-Score: 0.8393
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [16/20] 완료 - Train Loss: 0.3200, Train Acc: 0.8595, Val Loss: 0.3551, Val Acc: 0.8412, Val Precision: 0.8413, Val Recall: 0.8412, Val F1-Score: 0.8412
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_oboe.pt
+--> 최고 검증 손실 기록: 0.3551 저장됨.
+
+Epoch [17/20] 완료 - Train Loss: 0.3143, Train Acc: 0.8640, Val Loss: 0.3609, Val Acc: 0.8417, Val Precision: 0.8422, Val Recall: 0.8417, Val F1-Score: 0.8414
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [18/20] 완료 - Train Loss: 0.3088, Train Acc: 0.8659, Val Loss: 0.3553, Val Acc: 0.8428, Val Precision: 0.8427, Val Recall: 0.8428, Val F1-Score: 0.8427
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [19/20] 완료 - Train Loss: 0.2999, Train Acc: 0.8704, Val Loss: 0.3670, Val Acc: 0.8384, Val Precision: 0.8394, Val Recall: 0.8384, Val F1-Score: 0.8385
+--> EarlyStopping 트리거 횟수: 3/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.2952, Train Acc: 0.8729, Val Loss: 0.3685, Val Acc: 0.8418, Val Precision: 0.8417, Val Recall: 0.8418, Val F1-Score: 0.8418
+--> EarlyStopping 트리거 횟수: 4/10
+
+모델 학습 완료. 최고 검증 손실: 0.3551
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.3508403398850034
+테스트 정확도: 0.8407190275023709
+F1-score: 0.8497539950392388
+              precision    recall  f1-score   support
+
+    Not oboe       0.82      0.85      0.83     10710
+        oboe       0.86      0.84      0.85     12488
+
+    accuracy                           0.84     23198
+   macro avg       0.84      0.84      0.84     23198
+weighted avg       0.84      0.84      0.84     23198
+
+모델 저장 완료: best_model_oboe.pt
+
+=== 악기: saxophone (10/16) ===
+클래스 가중치 계산 완료: {0: 1.0687983045185963, 1: 0.939523110413608}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.4749, Train Acc: 0.7750, Val Loss: 0.4021, Val Acc: 0.8105, Val Precision: 0.8136, Val Recall: 0.8105, Val F1-Score: 0.8092
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.4021 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4104, Train Acc: 0.8082, Val Loss: 0.3697, Val Acc: 0.8268, Val Precision: 0.8274, Val Recall: 0.8268, Val F1-Score: 0.8269
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3697 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.3922, Train Acc: 0.8158, Val Loss: 0.3630, Val Acc: 0.8295, Val Precision: 0.8297, Val Recall: 0.8295, Val F1-Score: 0.8295
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3630 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.3792, Train Acc: 0.8213, Val Loss: 0.3515, Val Acc: 0.8348, Val Precision: 0.8350, Val Recall: 0.8348, Val F1-Score: 0.8345
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3515 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.3710, Train Acc: 0.8267, Val Loss: 0.3500, Val Acc: 0.8355, Val Precision: 0.8360, Val Recall: 0.8355, Val F1-Score: 0.8350
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3500 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.3628, Train Acc: 0.8301, Val Loss: 0.3417, Val Acc: 0.8393, Val Precision: 0.8395, Val Recall: 0.8393, Val F1-Score: 0.8393
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3417 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.3564, Train Acc: 0.8330, Val Loss: 0.3397, Val Acc: 0.8377, Val Precision: 0.8383, Val Recall: 0.8377, Val F1-Score: 0.8378
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3397 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.3496, Train Acc: 0.8371, Val Loss: 0.3397, Val Acc: 0.8376, Val Precision: 0.8383, Val Recall: 0.8376, Val F1-Score: 0.8372
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [9/20] 완료 - Train Loss: 0.3430, Train Acc: 0.8395, Val Loss: 0.3369, Val Acc: 0.8410, Val Precision: 0.8431, Val Recall: 0.8410, Val F1-Score: 0.8411
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3369 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.3376, Train Acc: 0.8433, Val Loss: 0.3380, Val Acc: 0.8408, Val Precision: 0.8425, Val Recall: 0.8408, Val F1-Score: 0.8409
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.3319, Train Acc: 0.8465, Val Loss: 0.3373, Val Acc: 0.8427, Val Precision: 0.8435, Val Recall: 0.8427, Val F1-Score: 0.8422
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [12/20] 완료 - Train Loss: 0.3267, Train Acc: 0.8491, Val Loss: 0.3296, Val Acc: 0.8425, Val Precision: 0.8426, Val Recall: 0.8425, Val F1-Score: 0.8425
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_saxophone.pt
+--> 최고 검증 손실 기록: 0.3296 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.3201, Train Acc: 0.8529, Val Loss: 0.3378, Val Acc: 0.8443, Val Precision: 0.8443, Val Recall: 0.8443, Val F1-Score: 0.8443
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [14/20] 완료 - Train Loss: 0.3155, Train Acc: 0.8550, Val Loss: 0.3325, Val Acc: 0.8427, Val Precision: 0.8470, Val Recall: 0.8427, Val F1-Score: 0.8427
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [15/20] 완료 - Train Loss: 0.3096, Train Acc: 0.8584, Val Loss: 0.3388, Val Acc: 0.8421, Val Precision: 0.8436, Val Recall: 0.8421, Val F1-Score: 0.8422
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [16/20] 완료 - Train Loss: 0.3034, Train Acc: 0.8616, Val Loss: 0.3357, Val Acc: 0.8441, Val Precision: 0.8445, Val Recall: 0.8441, Val F1-Score: 0.8442
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [17/20] 완료 - Train Loss: 0.2970, Train Acc: 0.8663, Val Loss: 0.3457, Val Acc: 0.8433, Val Precision: 0.8432, Val Recall: 0.8433, Val F1-Score: 0.8432
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [18/20] 완료 - Train Loss: 0.2806, Train Acc: 0.8739, Val Loss: 0.3446, Val Acc: 0.8462, Val Precision: 0.8476, Val Recall: 0.8462, Val F1-Score: 0.8463
+--> EarlyStopping 트리거 횟수: 6/10
+
+Epoch [19/20] 완료 - Train Loss: 0.2738, Train Acc: 0.8778, Val Loss: 0.3414, Val Acc: 0.8457, Val Precision: 0.8462, Val Recall: 0.8457, Val F1-Score: 0.8458
+--> EarlyStopping 트리거 횟수: 7/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.2692, Train Acc: 0.8806, Val Loss: 0.3436, Val Acc: 0.8437, Val Precision: 0.8442, Val Recall: 0.8437, Val F1-Score: 0.8438
+--> EarlyStopping 트리거 횟수: 8/10
+
+모델 학습 완료. 최고 검증 손실: 0.3296
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.3322496327313588
+테스트 정확도: 0.8423139925855677
+F1-score: 0.8520944525311338
+               precision    recall  f1-score   support
+
+Not saxophone       0.83      0.83      0.83     10803
+    saxophone       0.85      0.85      0.85     12395
+
+     accuracy                           0.84     23198
+    macro avg       0.84      0.84      0.84     23198
+ weighted avg       0.84      0.84      0.84     23198
+
+모델 저장 완료: best_model_saxophone.pt
+
+=== 악기: tambourine (11/16) ===
+클래스 가중치 계산 완료: {0: 1.0655214385779574, 1: 0.9420698897439542}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.1420, Train Acc: 0.9467, Val Loss: 0.0739, Val Acc: 0.9775, Val Precision: 0.9785, Val Recall: 0.9775, Val F1-Score: 0.9776
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0739 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.0631, Train Acc: 0.9794, Val Loss: 0.0413, Val Acc: 0.9869, Val Precision: 0.9870, Val Recall: 0.9869, Val F1-Score: 0.9869
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0413 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.0504, Train Acc: 0.9838, Val Loss: 0.0365, Val Acc: 0.9887, Val Precision: 0.9888, Val Recall: 0.9887, Val F1-Score: 0.9887
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0365 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.0430, Train Acc: 0.9865, Val Loss: 0.0331, Val Acc: 0.9900, Val Precision: 0.9901, Val Recall: 0.9900, Val F1-Score: 0.9900
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0331 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.0387, Train Acc: 0.9882, Val Loss: 0.0320, Val Acc: 0.9905, Val Precision: 0.9906, Val Recall: 0.9905, Val F1-Score: 0.9905
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0320 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.0356, Train Acc: 0.9890, Val Loss: 0.0291, Val Acc: 0.9909, Val Precision: 0.9910, Val Recall: 0.9909, Val F1-Score: 0.9909
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0291 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.0329, Train Acc: 0.9898, Val Loss: 0.0277, Val Acc: 0.9917, Val Precision: 0.9917, Val Recall: 0.9917, Val F1-Score: 0.9917
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0277 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.0319, Train Acc: 0.9904, Val Loss: 0.0268, Val Acc: 0.9918, Val Precision: 0.9919, Val Recall: 0.9918, Val F1-Score: 0.9918
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0268 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.0294, Train Acc: 0.9911, Val Loss: 0.0257, Val Acc: 0.9922, Val Precision: 0.9923, Val Recall: 0.9922, Val F1-Score: 0.9922
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0257 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.0286, Train Acc: 0.9914, Val Loss: 0.0285, Val Acc: 0.9916, Val Precision: 0.9917, Val Recall: 0.9916, Val F1-Score: 0.9916
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.0274, Train Acc: 0.9916, Val Loss: 0.0252, Val Acc: 0.9925, Val Precision: 0.9926, Val Recall: 0.9925, Val F1-Score: 0.9925
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0252 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.0261, Train Acc: 0.9923, Val Loss: 0.0257, Val Acc: 0.9929, Val Precision: 0.9930, Val Recall: 0.9929, Val F1-Score: 0.9929
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.0255, Train Acc: 0.9923, Val Loss: 0.0246, Val Acc: 0.9928, Val Precision: 0.9928, Val Recall: 0.9928, Val F1-Score: 0.9928
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0246 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.0244, Train Acc: 0.9927, Val Loss: 0.0249, Val Acc: 0.9928, Val Precision: 0.9929, Val Recall: 0.9928, Val F1-Score: 0.9928
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.0239, Train Acc: 0.9930, Val Loss: 0.0268, Val Acc: 0.9925, Val Precision: 0.9926, Val Recall: 0.9925, Val F1-Score: 0.9925
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [16/20] 완료 - Train Loss: 0.0227, Train Acc: 0.9932, Val Loss: 0.0263, Val Acc: 0.9929, Val Precision: 0.9930, Val Recall: 0.9929, Val F1-Score: 0.9929
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [17/20] 완료 - Train Loss: 0.0223, Train Acc: 0.9932, Val Loss: 0.0238, Val Acc: 0.9933, Val Precision: 0.9933, Val Recall: 0.9933, Val F1-Score: 0.9933
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tambourine.pt
+--> 최고 검증 손실 기록: 0.0238 저장됨.
+
+Epoch [18/20] 완료 - Train Loss: 0.0205, Train Acc: 0.9938, Val Loss: 0.0240, Val Acc: 0.9929, Val Precision: 0.9930, Val Recall: 0.9929, Val F1-Score: 0.9929
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [19/20] 완료 - Train Loss: 0.0202, Train Acc: 0.9938, Val Loss: 0.0263, Val Acc: 0.9926, Val Precision: 0.9926, Val Recall: 0.9926, Val F1-Score: 0.9926
+--> EarlyStopping 트리거 횟수: 2/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.0200, Train Acc: 0.9939, Val Loss: 0.0242, Val Acc: 0.9928, Val Precision: 0.9929, Val Recall: 0.9928, Val F1-Score: 0.9928
+--> EarlyStopping 트리거 횟수: 3/10
+
+모델 학습 완료. 최고 검증 손실: 0.0238
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.02431398166721109
+테스트 정확도: 0.9935339253383912
+F1-score: 0.9939256499554547
+                precision    recall  f1-score   support
+
+Not tambourine       0.99      1.00      0.99     10807
+    tambourine       1.00      0.99      0.99     12391
+
+      accuracy                           0.99     23198
+     macro avg       0.99      0.99      0.99     23198
+  weighted avg       0.99      0.99      0.99     23198
+
+모델 저장 완료: best_model_tambourine.pt
+
+=== 악기: trombone (12/16) ===
+클래스 가중치 계산 완료: {0: 1.0627147372761006, 1: 0.9442748402328327}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5096, Train Acc: 0.7561, Val Loss: 0.4535, Val Acc: 0.7858, Val Precision: 0.7857, Val Recall: 0.7858, Val F1-Score: 0.7856
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.4535 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4589, Train Acc: 0.7859, Val Loss: 0.4262, Val Acc: 0.7984, Val Precision: 0.8054, Val Recall: 0.7984, Val F1-Score: 0.7959
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.4262 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4408, Train Acc: 0.7966, Val Loss: 0.4098, Val Acc: 0.8075, Val Precision: 0.8087, Val Recall: 0.8075, Val F1-Score: 0.8067
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.4098 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4268, Train Acc: 0.8032, Val Loss: 0.4071, Val Acc: 0.8131, Val Precision: 0.8154, Val Recall: 0.8131, Val F1-Score: 0.8121
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.4071 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.4168, Train Acc: 0.8090, Val Loss: 0.4020, Val Acc: 0.8142, Val Precision: 0.8144, Val Recall: 0.8142, Val F1-Score: 0.8143
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.4020 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.4090, Train Acc: 0.8138, Val Loss: 0.3951, Val Acc: 0.8194, Val Precision: 0.8216, Val Recall: 0.8194, Val F1-Score: 0.8184
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.3951 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.4023, Train Acc: 0.8170, Val Loss: 0.4023, Val Acc: 0.8154, Val Precision: 0.8177, Val Recall: 0.8154, Val F1-Score: 0.8155
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [8/20] 완료 - Train Loss: 0.3942, Train Acc: 0.8216, Val Loss: 0.3845, Val Acc: 0.8227, Val Precision: 0.8270, Val Recall: 0.8227, Val F1-Score: 0.8212
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.3845 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.3877, Train Acc: 0.8252, Val Loss: 0.3841, Val Acc: 0.8221, Val Precision: 0.8259, Val Recall: 0.8221, Val F1-Score: 0.8208
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.3841 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.3799, Train Acc: 0.8283, Val Loss: 0.3767, Val Acc: 0.8286, Val Precision: 0.8292, Val Recall: 0.8286, Val F1-Score: 0.8281
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trombone.pt
+--> 최고 검증 손실 기록: 0.3767 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.3736, Train Acc: 0.8317, Val Loss: 0.3816, Val Acc: 0.8243, Val Precision: 0.8244, Val Recall: 0.8243, Val F1-Score: 0.8241
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [12/20] 완료 - Train Loss: 0.3679, Train Acc: 0.8355, Val Loss: 0.3840, Val Acc: 0.8270, Val Precision: 0.8270, Val Recall: 0.8270, Val F1-Score: 0.8268
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [13/20] 완료 - Train Loss: 0.3606, Train Acc: 0.8392, Val Loss: 0.3781, Val Acc: 0.8290, Val Precision: 0.8292, Val Recall: 0.8290, Val F1-Score: 0.8287
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [14/20] 완료 - Train Loss: 0.3537, Train Acc: 0.8432, Val Loss: 0.3798, Val Acc: 0.8272, Val Precision: 0.8277, Val Recall: 0.8272, Val F1-Score: 0.8273
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [15/20] 완료 - Train Loss: 0.3481, Train Acc: 0.8463, Val Loss: 0.3809, Val Acc: 0.8275, Val Precision: 0.8275, Val Recall: 0.8275, Val F1-Score: 0.8275
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [16/20] 완료 - Train Loss: 0.3306, Train Acc: 0.8544, Val Loss: 0.3781, Val Acc: 0.8321, Val Precision: 0.8325, Val Recall: 0.8321, Val F1-Score: 0.8317
+--> EarlyStopping 트리거 횟수: 6/10
+
+Epoch [17/20] 완료 - Train Loss: 0.3233, Train Acc: 0.8588, Val Loss: 0.3773, Val Acc: 0.8306, Val Precision: 0.8307, Val Recall: 0.8306, Val F1-Score: 0.8304
+--> EarlyStopping 트리거 횟수: 7/10
+
+Epoch [18/20] 완료 - Train Loss: 0.3179, Train Acc: 0.8615, Val Loss: 0.3899, Val Acc: 0.8318, Val Precision: 0.8348, Val Recall: 0.8318, Val F1-Score: 0.8308
+--> EarlyStopping 트리거 횟수: 8/10
+
+Epoch [19/20] 완료 - Train Loss: 0.3123, Train Acc: 0.8648, Val Loss: 0.3828, Val Acc: 0.8314, Val Precision: 0.8316, Val Recall: 0.8314, Val F1-Score: 0.8310
+--> EarlyStopping 트리거 횟수: 9/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.3061, Train Acc: 0.8674, Val Loss: 0.3897, Val Acc: 0.8290, Val Precision: 0.8290, Val Recall: 0.8290, Val F1-Score: 0.8289
+--> EarlyStopping 트리거 횟수: 10/10
+
+Early stopping 발생. 학습 중단.
+
+모델 학습 완료. 최고 검증 손실: 0.3767
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.3770023023365839
+테스트 정확도: 0.8269678420553496
+F1-score: 0.842316153362665
+              precision    recall  f1-score   support
+
+Not trombone       0.84      0.78      0.81     10817
+    trombone       0.82      0.87      0.84     12381
+
+    accuracy                           0.83     23198
+   macro avg       0.83      0.82      0.83     23198
+weighted avg       0.83      0.83      0.83     23198
+
+모델 저장 완료: best_model_trombone.pt
+
+=== 악기: trumpet (13/16) ===
+클래스 가중치 계산 완료: {0: 1.06804788213628, 1: 0.9401037445290971}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5109, Train Acc: 0.7572, Val Loss: 0.4412, Val Acc: 0.7955, Val Precision: 0.7957, Val Recall: 0.7955, Val F1-Score: 0.7955
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.4412 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.4547, Train Acc: 0.7920, Val Loss: 0.4160, Val Acc: 0.8093, Val Precision: 0.8132, Val Recall: 0.8093, Val F1-Score: 0.8076
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.4160 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4348, Train Acc: 0.8018, Val Loss: 0.3983, Val Acc: 0.8164, Val Precision: 0.8200, Val Recall: 0.8164, Val F1-Score: 0.8150
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3983 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4209, Train Acc: 0.8083, Val Loss: 0.3949, Val Acc: 0.8176, Val Precision: 0.8194, Val Recall: 0.8176, Val F1-Score: 0.8177
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3949 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.4098, Train Acc: 0.8140, Val Loss: 0.3806, Val Acc: 0.8248, Val Precision: 0.8249, Val Recall: 0.8248, Val F1-Score: 0.8248
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3806 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.3999, Train Acc: 0.8175, Val Loss: 0.3791, Val Acc: 0.8281, Val Precision: 0.8281, Val Recall: 0.8281, Val F1-Score: 0.8279
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3791 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.3919, Train Acc: 0.8215, Val Loss: 0.3715, Val Acc: 0.8314, Val Precision: 0.8315, Val Recall: 0.8314, Val F1-Score: 0.8314
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3715 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.3851, Train Acc: 0.8254, Val Loss: 0.3678, Val Acc: 0.8318, Val Precision: 0.8318, Val Recall: 0.8318, Val F1-Score: 0.8318
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3678 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.3776, Train Acc: 0.8297, Val Loss: 0.3642, Val Acc: 0.8314, Val Precision: 0.8322, Val Recall: 0.8314, Val F1-Score: 0.8308
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3642 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.3722, Train Acc: 0.8319, Val Loss: 0.3703, Val Acc: 0.8306, Val Precision: 0.8335, Val Recall: 0.8306, Val F1-Score: 0.8295
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.3645, Train Acc: 0.8370, Val Loss: 0.3597, Val Acc: 0.8361, Val Precision: 0.8362, Val Recall: 0.8361, Val F1-Score: 0.8361
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_trumpet.pt
+--> 최고 검증 손실 기록: 0.3597 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.3575, Train Acc: 0.8392, Val Loss: 0.3613, Val Acc: 0.8348, Val Precision: 0.8351, Val Recall: 0.8348, Val F1-Score: 0.8344
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.3516, Train Acc: 0.8427, Val Loss: 0.3621, Val Acc: 0.8372, Val Precision: 0.8383, Val Recall: 0.8372, Val F1-Score: 0.8366
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [14/20] 완료 - Train Loss: 0.3459, Train Acc: 0.8467, Val Loss: 0.3613, Val Acc: 0.8369, Val Precision: 0.8371, Val Recall: 0.8369, Val F1-Score: 0.8370
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [15/20] 완료 - Train Loss: 0.3394, Train Acc: 0.8497, Val Loss: 0.3624, Val Acc: 0.8357, Val Precision: 0.8359, Val Recall: 0.8357, Val F1-Score: 0.8358
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [16/20] 완료 - Train Loss: 0.3339, Train Acc: 0.8529, Val Loss: 0.3629, Val Acc: 0.8365, Val Precision: 0.8364, Val Recall: 0.8365, Val F1-Score: 0.8363
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [17/20] 완료 - Train Loss: 0.3141, Train Acc: 0.8628, Val Loss: 0.3629, Val Acc: 0.8358, Val Precision: 0.8357, Val Recall: 0.8358, Val F1-Score: 0.8356
+--> EarlyStopping 트리거 횟수: 6/10
+
+Epoch [18/20] 완료 - Train Loss: 0.3082, Train Acc: 0.8655, Val Loss: 0.3723, Val Acc: 0.8367, Val Precision: 0.8376, Val Recall: 0.8367, Val F1-Score: 0.8368
+--> EarlyStopping 트리거 횟수: 7/10
+
+Epoch [19/20] 완료 - Train Loss: 0.3047, Train Acc: 0.8675, Val Loss: 0.3670, Val Acc: 0.8367, Val Precision: 0.8366, Val Recall: 0.8367, Val F1-Score: 0.8366
+--> EarlyStopping 트리거 횟수: 8/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.2983, Train Acc: 0.8715, Val Loss: 0.3709, Val Acc: 0.8372, Val Precision: 0.8372, Val Recall: 0.8372, Val F1-Score: 0.8370
+--> EarlyStopping 트리거 횟수: 9/10
+
+모델 학습 완료. 최고 검증 손실: 0.3597
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.3633446541621013
+테스트 정확도: 0.8377446331580308
+F1-score: 0.8490535771575233
+              precision    recall  f1-score   support
+
+ Not trumpet       0.83      0.82      0.82     10738
+     trumpet       0.85      0.85      0.85     12460
+
+    accuracy                           0.84     23198
+   macro avg       0.84      0.84      0.84     23198
+weighted avg       0.84      0.84      0.84     23198
+
+모델 저장 완료: best_model_trumpet.pt
+
+=== 악기: tuba (14/16) ===
+클래스 가중치 계산 완료: {0: 1.064213870379503, 1: 0.943094388714415}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.3550, Train Acc: 0.8446, Val Loss: 0.2825, Val Acc: 0.8733, Val Precision: 0.8775, Val Recall: 0.8733, Val F1-Score: 0.8725
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.2825 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.2876, Train Acc: 0.8759, Val Loss: 0.2412, Val Acc: 0.8943, Val Precision: 0.8942, Val Recall: 0.8943, Val F1-Score: 0.8942
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.2412 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.2635, Train Acc: 0.8874, Val Loss: 0.2469, Val Acc: 0.8902, Val Precision: 0.8930, Val Recall: 0.8902, Val F1-Score: 0.8902
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [4/20] 완료 - Train Loss: 0.2476, Train Acc: 0.8952, Val Loss: 0.2180, Val Acc: 0.9039, Val Precision: 0.9039, Val Recall: 0.9039, Val F1-Score: 0.9039
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.2180 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.2362, Train Acc: 0.9002, Val Loss: 0.2105, Val Acc: 0.9093, Val Precision: 0.9094, Val Recall: 0.9093, Val F1-Score: 0.9092
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.2105 저장됨.
+
+Epoch [6/20] 완료 - Train Loss: 0.2260, Train Acc: 0.9051, Val Loss: 0.1989, Val Acc: 0.9141, Val Precision: 0.9141, Val Recall: 0.9141, Val F1-Score: 0.9141
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1989 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.2176, Train Acc: 0.9084, Val Loss: 0.1975, Val Acc: 0.9153, Val Precision: 0.9154, Val Recall: 0.9153, Val F1-Score: 0.9152
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1975 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.2093, Train Acc: 0.9122, Val Loss: 0.1916, Val Acc: 0.9178, Val Precision: 0.9178, Val Recall: 0.9178, Val F1-Score: 0.9178
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1916 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.2042, Train Acc: 0.9153, Val Loss: 0.2259, Val Acc: 0.9012, Val Precision: 0.9077, Val Recall: 0.9012, Val F1-Score: 0.9011
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [10/20] 완료 - Train Loss: 0.1981, Train Acc: 0.9178, Val Loss: 0.1893, Val Acc: 0.9206, Val Precision: 0.9207, Val Recall: 0.9206, Val F1-Score: 0.9207
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1893 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.1918, Train Acc: 0.9201, Val Loss: 0.1858, Val Acc: 0.9209, Val Precision: 0.9211, Val Recall: 0.9209, Val F1-Score: 0.9208
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1858 저장됨.
+
+Epoch [12/20] 완료 - Train Loss: 0.1863, Train Acc: 0.9232, Val Loss: 0.1983, Val Acc: 0.9159, Val Precision: 0.9176, Val Recall: 0.9159, Val F1-Score: 0.9160
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [13/20] 완료 - Train Loss: 0.1806, Train Acc: 0.9255, Val Loss: 0.1804, Val Acc: 0.9246, Val Precision: 0.9247, Val Recall: 0.9246, Val F1-Score: 0.9246
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1804 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.1764, Train Acc: 0.9273, Val Loss: 0.1804, Val Acc: 0.9239, Val Precision: 0.9245, Val Recall: 0.9239, Val F1-Score: 0.9240
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.1723, Train Acc: 0.9296, Val Loss: 0.1780, Val Acc: 0.9256, Val Precision: 0.9260, Val Recall: 0.9256, Val F1-Score: 0.9256
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_tuba.pt
+--> 최고 검증 손실 기록: 0.1780 저장됨.
+
+Epoch [16/20] 완료 - Train Loss: 0.1668, Train Acc: 0.9321, Val Loss: 0.1789, Val Acc: 0.9250, Val Precision: 0.9252, Val Recall: 0.9250, Val F1-Score: 0.9250
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [17/20] 완료 - Train Loss: 0.1627, Train Acc: 0.9338, Val Loss: 0.1792, Val Acc: 0.9248, Val Precision: 0.9248, Val Recall: 0.9248, Val F1-Score: 0.9248
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [18/20] 완료 - Train Loss: 0.1569, Train Acc: 0.9361, Val Loss: 0.1805, Val Acc: 0.9275, Val Precision: 0.9275, Val Recall: 0.9275, Val F1-Score: 0.9275
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [19/20] 완료 - Train Loss: 0.1535, Train Acc: 0.9374, Val Loss: 0.1844, Val Acc: 0.9265, Val Precision: 0.9269, Val Recall: 0.9265, Val F1-Score: 0.9265
+--> EarlyStopping 트리거 횟수: 4/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.1509, Train Acc: 0.9391, Val Loss: 0.1872, Val Acc: 0.9253, Val Precision: 0.9253, Val Recall: 0.9253, Val F1-Score: 0.9252
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+모델 학습 완료. 최고 검증 손실: 0.1780
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.17546116943985895
+테스트 정확도: 0.9258125700491422
+F1-score: 0.9296890958859337
+              precision    recall  f1-score   support
+
+    Not tuba       0.91      0.93      0.92     10815
+        tuba       0.94      0.92      0.93     12383
+
+    accuracy                           0.93     23198
+   macro avg       0.93      0.93      0.93     23198
+weighted avg       0.93      0.93      0.93     23198
+
+모델 저장 완료: best_model_tuba.pt
+
+=== 악기: viola (15/16) ===
+클래스 가중치 계산 완료: {0: 1.0637502722655936, 1: 0.9434587658739438}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5543, Train Acc: 0.7244, Val Loss: 0.5073, Val Acc: 0.7464, Val Precision: 0.7498, Val Recall: 0.7464, Val F1-Score: 0.7436
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.5073 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.5186, Train Acc: 0.7452, Val Loss: 0.5041, Val Acc: 0.7458, Val Precision: 0.7467, Val Recall: 0.7458, Val F1-Score: 0.7461
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.5041 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.5038, Train Acc: 0.7560, Val Loss: 0.4810, Val Acc: 0.7664, Val Precision: 0.7736, Val Recall: 0.7664, Val F1-Score: 0.7627
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.4810 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4921, Train Acc: 0.7634, Val Loss: 0.4734, Val Acc: 0.7711, Val Precision: 0.7743, Val Recall: 0.7711, Val F1-Score: 0.7689
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.4734 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.4825, Train Acc: 0.7685, Val Loss: 0.4874, Val Acc: 0.7605, Val Precision: 0.7650, Val Recall: 0.7605, Val F1-Score: 0.7607
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [6/20] 완료 - Train Loss: 0.4722, Train Acc: 0.7757, Val Loss: 0.5173, Val Acc: 0.7432, Val Precision: 0.7563, Val Recall: 0.7432, Val F1-Score: 0.7424
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [7/20] 완료 - Train Loss: 0.4660, Train Acc: 0.7796, Val Loss: 0.4606, Val Acc: 0.7799, Val Precision: 0.7797, Val Recall: 0.7799, Val F1-Score: 0.7797
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.4606 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.4582, Train Acc: 0.7838, Val Loss: 0.4674, Val Acc: 0.7762, Val Precision: 0.7760, Val Recall: 0.7762, Val F1-Score: 0.7758
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [9/20] 완료 - Train Loss: 0.4533, Train Acc: 0.7866, Val Loss: 0.4562, Val Acc: 0.7799, Val Precision: 0.7852, Val Recall: 0.7799, Val F1-Score: 0.7771
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.4562 저장됨.
+
+Epoch [10/20] 완료 - Train Loss: 0.4478, Train Acc: 0.7903, Val Loss: 0.4613, Val Acc: 0.7776, Val Precision: 0.7785, Val Recall: 0.7776, Val F1-Score: 0.7778
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [11/20] 완료 - Train Loss: 0.4435, Train Acc: 0.7920, Val Loss: 0.4605, Val Acc: 0.7801, Val Precision: 0.7802, Val Recall: 0.7801, Val F1-Score: 0.7802
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [12/20] 완료 - Train Loss: 0.4378, Train Acc: 0.7963, Val Loss: 0.4497, Val Acc: 0.7851, Val Precision: 0.7849, Val Recall: 0.7851, Val F1-Score: 0.7847
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_viola.pt
+--> 최고 검증 손실 기록: 0.4497 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.4325, Train Acc: 0.7987, Val Loss: 0.4603, Val Acc: 0.7801, Val Precision: 0.7799, Val Recall: 0.7801, Val F1-Score: 0.7798
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [14/20] 완료 - Train Loss: 0.4278, Train Acc: 0.8007, Val Loss: 0.4500, Val Acc: 0.7859, Val Precision: 0.7883, Val Recall: 0.7859, Val F1-Score: 0.7842
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [15/20] 완료 - Train Loss: 0.4221, Train Acc: 0.8049, Val Loss: 0.4607, Val Acc: 0.7795, Val Precision: 0.7811, Val Recall: 0.7795, Val F1-Score: 0.7798
+--> EarlyStopping 트리거 횟수: 3/10
+
+Epoch [16/20] 완료 - Train Loss: 0.4173, Train Acc: 0.8079, Val Loss: 0.4543, Val Acc: 0.7841, Val Precision: 0.7851, Val Recall: 0.7841, Val F1-Score: 0.7829
+--> EarlyStopping 트리거 횟수: 4/10
+
+Epoch [17/20] 완료 - Train Loss: 0.4121, Train Acc: 0.8104, Val Loss: 0.4655, Val Acc: 0.7773, Val Precision: 0.7905, Val Recall: 0.7773, Val F1-Score: 0.7722
+--> EarlyStopping 트리거 횟수: 5/10
+
+--> 학습률이 5e-05로 감소됨.
+
+Epoch [18/20] 완료 - Train Loss: 0.3963, Train Acc: 0.8193, Val Loss: 0.4555, Val Acc: 0.7845, Val Precision: 0.7845, Val Recall: 0.7845, Val F1-Score: 0.7845
+--> EarlyStopping 트리거 횟수: 6/10
+
+Epoch [19/20] 완료 - Train Loss: 0.3901, Train Acc: 0.8235, Val Loss: 0.4576, Val Acc: 0.7820, Val Precision: 0.7824, Val Recall: 0.7820, Val F1-Score: 0.7811
+--> EarlyStopping 트리거 횟수: 7/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.3845, Train Acc: 0.8261, Val Loss: 0.4601, Val Acc: 0.7829, Val Precision: 0.7836, Val Recall: 0.7829, Val F1-Score: 0.7819
+--> EarlyStopping 트리거 횟수: 8/10
+
+모델 학습 완료. 최고 검증 손실: 0.4497
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.45234641968222444
+테스트 정확도: 0.7827829985343564
+F1-score: 0.8009795015600932
+              precision    recall  f1-score   support
+
+   Not viola       0.78      0.74      0.76     10827
+       viola       0.78      0.82      0.80     12371
+
+    accuracy                           0.78     23198
+   macro avg       0.78      0.78      0.78     23198
+weighted avg       0.78      0.78      0.78     23198
+
+모델 저장 완료: best_model_viola.pt
+
+=== 악기: violin (16/16) ===
+클래스 가중치 계산 완료: {0: 1.0645190895741556, 1: 0.9428548203544139}
+모델 훈련 시작...
+모델 학습 시작...
+
+Epoch [1/20] 완료 - Train Loss: 0.5484, Train Acc: 0.7287, Val Loss: 0.5211, Val Acc: 0.7403, Val Precision: 0.7671, Val Recall: 0.7403, Val F1-Score: 0.7290
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.5211 저장됨.
+
+Epoch [2/20] 완료 - Train Loss: 0.5076, Train Acc: 0.7560, Val Loss: 0.4739, Val Acc: 0.7720, Val Precision: 0.7761, Val Recall: 0.7720, Val F1-Score: 0.7694
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4739 저장됨.
+
+Epoch [3/20] 완료 - Train Loss: 0.4905, Train Acc: 0.7674, Val Loss: 0.4662, Val Acc: 0.7774, Val Precision: 0.7799, Val Recall: 0.7774, Val F1-Score: 0.7756
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4662 저장됨.
+
+Epoch [4/20] 완료 - Train Loss: 0.4775, Train Acc: 0.7749, Val Loss: 0.4607, Val Acc: 0.7832, Val Precision: 0.7841, Val Recall: 0.7832, Val F1-Score: 0.7834
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4607 저장됨.
+
+Epoch [5/20] 완료 - Train Loss: 0.4683, Train Acc: 0.7802, Val Loss: 0.4933, Val Acc: 0.7618, Val Precision: 0.7779, Val Recall: 0.7618, Val F1-Score: 0.7607
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [6/20] 완료 - Train Loss: 0.4604, Train Acc: 0.7845, Val Loss: 0.4429, Val Acc: 0.7925, Val Precision: 0.7934, Val Recall: 0.7925, Val F1-Score: 0.7916
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4429 저장됨.
+
+Epoch [7/20] 완료 - Train Loss: 0.4535, Train Acc: 0.7884, Val Loss: 0.4385, Val Acc: 0.7957, Val Precision: 0.7956, Val Recall: 0.7957, Val F1-Score: 0.7954
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4385 저장됨.
+
+Epoch [8/20] 완료 - Train Loss: 0.4462, Train Acc: 0.7932, Val Loss: 0.4341, Val Acc: 0.7955, Val Precision: 0.7954, Val Recall: 0.7955, Val F1-Score: 0.7955
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4341 저장됨.
+
+Epoch [9/20] 완료 - Train Loss: 0.4405, Train Acc: 0.7952, Val Loss: 0.4353, Val Acc: 0.7971, Val Precision: 0.7993, Val Recall: 0.7971, Val F1-Score: 0.7957
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [10/20] 완료 - Train Loss: 0.4342, Train Acc: 0.7995, Val Loss: 0.4290, Val Acc: 0.7999, Val Precision: 0.7998, Val Recall: 0.7999, Val F1-Score: 0.7996
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4290 저장됨.
+
+Epoch [11/20] 완료 - Train Loss: 0.4272, Train Acc: 0.8027, Val Loss: 0.4340, Val Acc: 0.7960, Val Precision: 0.7962, Val Recall: 0.7960, Val F1-Score: 0.7961
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [12/20] 완료 - Train Loss: 0.4223, Train Acc: 0.8058, Val Loss: 0.4277, Val Acc: 0.8008, Val Precision: 0.8021, Val Recall: 0.8008, Val F1-Score: 0.7997
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4277 저장됨.
+
+Epoch [13/20] 완료 - Train Loss: 0.4177, Train Acc: 0.8082, Val Loss: 0.4265, Val Acc: 0.8018, Val Precision: 0.8020, Val Recall: 0.8018, Val F1-Score: 0.8013
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4265 저장됨.
+
+Epoch [14/20] 완료 - Train Loss: 0.4109, Train Acc: 0.8118, Val Loss: 0.4545, Val Acc: 0.7848, Val Precision: 0.7935, Val Recall: 0.7848, Val F1-Score: 0.7847
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [15/20] 완료 - Train Loss: 0.4047, Train Acc: 0.8148, Val Loss: 0.4263, Val Acc: 0.8003, Val Precision: 0.8013, Val Recall: 0.8003, Val F1-Score: 0.7993
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4263 저장됨.
+
+Epoch [16/20] 완료 - Train Loss: 0.3993, Train Acc: 0.8183, Val Loss: 0.4343, Val Acc: 0.7941, Val Precision: 0.7963, Val Recall: 0.7941, Val F1-Score: 0.7944
+--> EarlyStopping 트리거 횟수: 1/10
+
+Epoch [17/20] 완료 - Train Loss: 0.3927, Train Acc: 0.8212, Val Loss: 0.4351, Val Acc: 0.7969, Val Precision: 0.7979, Val Recall: 0.7969, Val F1-Score: 0.7971
+--> EarlyStopping 트리거 횟수: 2/10
+
+Epoch [18/20] 완료 - Train Loss: 0.3880, Train Acc: 0.8242, Val Loss: 0.4236, Val Acc: 0.8025, Val Precision: 0.8024, Val Recall: 0.8025, Val F1-Score: 0.8022
+모델 저장 완료: /content/drive/MyDrive/Sonus/models/best_model_violin.pt
+--> 최고 검증 손실 기록: 0.4236 저장됨.
+
+Epoch [19/20] 완료 - Train Loss: 0.3830, Train Acc: 0.8279, Val Loss: 0.4283, Val Acc: 0.7979, Val Precision: 0.7981, Val Recall: 0.7979, Val F1-Score: 0.7979
+--> EarlyStopping 트리거 횟수: 1/10
+
+<ipython-input-5-99129f917ed5>:621: FutureWarning: You are using torch.load with weights_only=False (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for weights_only will be flipped to True. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via torch.serialization.add_safe_globals. We recommend you start setting weights_only=True for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(path, map_location=device))
+
+Epoch [20/20] 완료 - Train Loss: 0.3748, Train Acc: 0.8321, Val Loss: 0.4307, Val Acc: 0.8021, Val Precision: 0.8019, Val Recall: 0.8021, Val F1-Score: 0.8020
+--> EarlyStopping 트리거 횟수: 2/10
+
+모델 학습 완료. 최고 검증 손실: 0.4236
+
+모델 훈련 완료.
+모델 평가 중...
+테스트 손실: 0.4254163609300053
+테스트 정확도: 0.8017070437106647
+F1-score: 0.8183541304691202
+              precision    recall  f1-score   support
+
+  Not violin       0.80      0.77      0.78     10737
+      violin       0.81      0.83      0.82     12461
+
+    accuracy                           0.80     23198
+   macro avg       0.80      0.80      0.80     23198
+weighted avg       0.80      0.80      0.80     23198
+
+모델 저장 완료: best_model_violin.pt
+
+모든 악기별 모델 학습 및 저장 완료.
