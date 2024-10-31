@@ -12,8 +12,8 @@ import logging  # 로깅을 위한 라이브러리
 
 # ----------------------------- 초기 설정 -----------------------------
 # 폴더 경로 설정
-chord_output_dir = "./chord_output"  # 악기 샘플이 저장된 디렉토리
-data_output_dir = "./data"  # 생성된 데이터와 메타데이터를 저장할 디렉토리
+chord_output_dir = "../chord_output"  # 악기 샘플이 저장된 디렉토리
+data_output_dir = "../data"  # 생성된 데이터와 메타데이터를 저장할 디렉토리
 metadata_file = os.path.join(data_output_dir, "metadata.json")  # 메타데이터 파일 경로
 
 # 데이터 셋 개수 설정
