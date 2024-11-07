@@ -34,18 +34,18 @@ EPOCHS = 20  # 에포크 수 설정
 LEARNING_RATE = 1e-4  # 학습률 설정
 
 # 데이터 관련 설정
-data_output_dir = "../data"  # 데이터 출력 디렉토리
+data_output_dir = "./data"  # 데이터 출력 디렉토리
 metadata_file = os.path.join(data_output_dir, "metadata.json")  # 메타데이터 파일 경로
-cache_dir = "../cache"  # 캐시 디렉토리 설정
+cache_dir = "./data"  # 캐시 디렉토리 설정
 os.makedirs(cache_dir, exist_ok=True)
 hdf5_file = os.path.join(cache_dir, "preprocessed_data.h5")  # 전처리된 데이터 저장 경로
 n_mfcc = 40  # MFCC 계수의 수
 max_len = 174  # MFCC 벡터의 최대 길이
 
 # 모델 및 로그 디렉토리 설정
-models_output_dir = "../models"  # 모델 저장 디렉토리
+models_output_dir = "./src/models"  # 모델 저장 디렉토리
 os.makedirs(models_output_dir, exist_ok=True)
-logs_dir = "../logs"  # 로그 디렉토리
+logs_dir = "./src/logs"  # 로그 디렉토리
 os.makedirs(logs_dir, exist_ok=True)
 
 # 하이퍼파라미터 튜닝 설정
