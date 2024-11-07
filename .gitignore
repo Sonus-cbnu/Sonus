@@ -5,7 +5,7 @@
 chord_output/
 data/
 kt_dir/
-_etc/
+etc/
 cache/
 
 # 모든 .log 파일 무시
@@ -13,6 +13,9 @@ cache/
 
 # 모든 .tmp 파일 무시
 *.tmp
+
+# 모델 파일 무시
+models/
 
 # .DS_Store 파일 무시 (Mac OS)
 .DS_Store
