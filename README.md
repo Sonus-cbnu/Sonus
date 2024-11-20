@@ -1,64 +1,64 @@
-# Sonus - 오케스트라 악기 소리 추출 프로젝트
+# Sonus - Orchestra Instrument Sound Extraction Project
 
-## 소개
+## Introduction
 
-Sonus는 AI 기술을 이용하여 오케스트라 악기 개별 소리를 추출하는 프로젝트입니다. 이 시스템은 연주자가 혼자서 오케스트라 곡을 연습할 수 있도록 각 악기의 소리를 분리하여 제공합니다. 이를 통해 연습 환경을 개선하고 다양한 악기 소리 샘플을 제공하여 학습과 연주에 도움을 주고자 합니다.
+Sonus is a project that utilizes AI technology to extract individual orchestra instrument sounds. This system provides separated sounds of each instrument, allowing musicians to practice orchestral pieces solo. By enhancing the practice environment and offering a variety of instrument sound samples, it aims to support learning and performance.
 
-### 주요 기능
+### Key Features
 
--   **개별 악기 소리 추출**: 특정 악기 소리를 분리하여 제공하여 혼자서도 오케스트라 곡을 연습할 수 있도록 돕습니다.
--   **광범위한 샘플 컬렉션**: 다양한 오케스트라 악기 샘플을 제공하여 연습과 교육에 유용합니다.
--   **교육적 활용**: 사용자 연주와 추출된 악기 소리를 비교할 수 있는 기능을 목표로 합니다.
+-   **Individual Instrument Sound Extraction**: Provides separated sounds of specific instruments to aid in practicing orchestral pieces individually.
+-   **Extensive Sample Collection**: Offers a wide range of orchestra instrument samples useful for practice and education.
+-   **Educational Use**: Aims to enable users to compare their performances with extracted instrument sounds.
 
-## 프로젝트 목표
+## Project Goals
 
-이 프로젝트의 주된 목표는 오케스트라에서 개별 악기 소리를 효율적으로 추출하는 것입니다. 이 기술은 다음을 목표로 합니다:
+​<light>The main goal of this project is to efficiently extract individual instrument sounds from an orchestra.</light>​ This technology aims to:
 
--   연주자가 혼자 연습할 수 있는 환경을 개선
--   다양한 악기의 소리를 제공하여 음악 교육의 질 향상
+-   Improve the environment for musicians to practice individually
+-   Enhance the quality of music education by providing sounds of various instruments
 
-## 데이터셋
+## Dataset
 
-본 프로젝트는 다음과 같은 데이터셋을 사용하였습니다:
+The project utilizes the following datasets:
 
 -   **Philharmonic Orchestra Dataset**
 -   **University of Rochester Multi-Modal Music Performance Dataset**
 -   **MusicNet Dataset**
--   **총 16개의 오케스트라 악기 데이터**를 수집하여 사용하였습니다.
+-   Collects and uses data from **16 different orchestra instruments**.
 
-## 방법론
+## Methodology
 
-### 특징 기반 악기 식별
+### Feature-Based Instrument Identification
 
-1. **데이터 수집 및 전처리**: 각 악기 소리를 포함하는 다양한 음원 데이터를 수집하고, MFCC로 오디오 전처리를 수행하였습니다.
-2. **데이터 증강**: Additive Noise Scaling, Frequency Masking, Time Masking 기법을 통해 데이터를 증강하였습니다.
-3. **데이터 저장**: 효율적인 저장을 위해 HDF5 형식을 사용하였고, 학습, 검증, 테스트 세트로 나누어 처리했습니다.
-4. **CNN 모델 설계**: Convolutional Neural Network(CNN)를 설계하여 소리 추출의 정확도를 높였습니다.
+1. **Data Collection and Preprocessing**: Collected diverse sound data that includes individual instrument sounds, and performed audio preprocessing using MFCC.
+2. **Data Augmentation**: Applied techniques such as Additive Noise Scaling, Frequency Masking, and Time Masking for data augmentation.
+3. **Data Storage**: Used HDF5 format for efficient storage and divided data into training, validation, and test sets.
+4. **CNN Model Design**: Designed a Convolutional Neural Network (CNN) to enhance the accuracy of sound extraction.
 
-### 음표 기반 악기 식별
+### Note-Based Instrument Identification
 
--   **음표 단위 악기 할당**: 각 음표 이벤트를 개별 악기 클래스에 할당하는 방식을 사용하였습니다.
--   **음표 정보 활용**: 음 높이, 시작과 종료 정보가 포함된 음표 데이터를 사용하여 악기 소리를 분류하는 방법을 적용하였습니다.
--   **모듈형 프레임워크**: 최신 다중 음 높이 추정(MPE) 알고리즘과 결합할 수 있는 모듈형 프레임워크로 설계되었습니다.
--   **음악적으로 동기화된 CNN 아키텍처**: 다양한 커널 형태(수직, 수평, 정사각형)를 사용하는 CNN 아키텍처를 채택하여 악기 할당의 정확도를 높였습니다.
+-   **Note-Level Instrument Assignment**: Applied a method of assigning each note event to an individual instrument class.
+-   **Utilization of Note Information**: Used note data including pitch, start, and end information to classify instrument sounds.
+-   **Modular Framework**: Designed as a modular framework that can integrate with the latest multi-pitch estimation (MPE) algorithms.
+-   **Musically Synchronized CNN Architecture**: Adopted a CNN architecture using various kernel shapes (vertical, horizontal, square) to improve the accuracy of instrument assignment.
 
-## 향후 작업
+## Future Work
 
--   **노트 레벨 악기 분류기 성능 향상**
--   **사용자 연주와 추출된 악기 소리를 비교할 수 있는 프로그램 개발**
--   **교육적 시스템 구축을 통해 연습과 교육의 질 향상**
+-   **Enhance Note-Level Instrument Classifier Performance**
+-   **Develop a program that compares user performances with extracted instrument sounds**
+-   **Build an educational system to improve the quality of practice and education**
 
-## 참고 자료
+## References
 
 -   Lordelo et al., "Deep Learning Methods for Instrument Separation and Recognition" (2020b, 2021a)
 -   Philharmonic Orchestra Dataset
 -   University of Rochester Multi-Modal Music Performance Dataset
 -   MusicNet Dataset
 
-## 기여자
+## Contributors
 
--   김윤태, 박용성, 이준혁
+-   Yuntae Kim, Yongseong Park, Junhyuk Lee
 
-## 라이선스
+## License
 
-본 프로젝트는 오픈소스 라이선스를 따릅니다.
+This project follows an open-source license.
