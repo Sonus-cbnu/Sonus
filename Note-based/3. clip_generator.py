@@ -183,9 +183,6 @@ def process_file(npy_file, csv_file, seed, instrument_file_counts):
         seed (int): 랜덤 시드.
         instrument_file_counts (dict): 악기별 파일 수를 추적하는 딕셔너리.
     """
-    # 랜덤 시드 설정
-    random.seed(seed)
-
     npy_path = os.path.join(NPY_DIR, npy_file)
     csv_path = os.path.join(CSV_DIR, csv_file)
 
@@ -193,19 +190,17 @@ def process_file(npy_file, csv_file, seed, instrument_file_counts):
         # CSV 파일 로드
         df = pd.read_csv(csv_path)
 
-        # 전체 행 중에서 랜덤하게 3000개 선택
-        random_indices = random.sample(range(len(df)), min(3000, len(df)))
-
-        # 악기별 파일 수를 추적하는 딕셔너리 초기화 (전역으로 관리되므로 생략)
+        # 모든 행의 인덱스를 가져옴
+        all_indices = range(len(df))
 
         # 진행 상황을 시각화하기 위해 tqdm 사용
         for i, index in enumerate(
-            tqdm(random_indices, desc=f"{npy_file} 클립 처리", unit="clip")
+            tqdm(all_indices, desc=f"{npy_file} 클립 처리", unit="clip")
         ):
             logging.info(f"{npy_file}: {i+1}번째 클립 처리 중: {index}번째 행")
             process_and_save_clip(npy_path, csv_path, index, instrument_file_counts)
 
-        logging.info(f"{npy_file}: 랜덤한 3000개의 클립 처리가 완료되었습니다.")
+        logging.info(f"{npy_file}: 모든 클립 처리가 완료되었습니다.")
 
 
 def main():
