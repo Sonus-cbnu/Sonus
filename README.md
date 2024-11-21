@@ -1,5 +1,9 @@
 # Sonus - Orchestra Instrument Sound Extraction Project
 
+## Project Link
+
+[Sonus Notion Link](https://reo91004.notion.site/sonus-2024?pvs=4)
+
 ## Introduction
 
 Sonus is a project that utilizes AI technology to extract individual orchestra instrument sounds. This system provides separated sounds of each instrument, allowing musicians to practice orchestral pieces solo. By enhancing the practice environment and offering a variety of instrument sound samples, it aims to support learning and performance.
