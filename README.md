@@ -2,13 +2,8 @@
 
 ## Project Link
 
-[Sonus Notion Link](https://reo91004.notion.site/sonus-2024?pvs=4)
+[Sonus Notion Link](https://reo91004.notion.site/Sonus-23c1c1bd5f5b40eba594be8deaced9b7?pvs=4)
 <br>
-
-If the above link does not work, please use the link below
-<br>
-
-[Sonus Notion Temporal Link](https://www.notion.so/reo91004/Sonus-23c1c1bd5f5b40eba594be8deaced9b7?pvs=4)
 
 ## Introduction
 
